@@ -1,0 +1,8 @@
+{
+    "require": {
+        "aura/auth": "^2.0",
+        "aura/session": "^2.0",
+        "aura/di": "^3.1",
+		"cheprasov/php-simple-profiler":"1.1.0"
+    }
+}
