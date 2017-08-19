@@ -54,7 +54,7 @@ class backend{
 	}
 	
 	
-	
+	/* Change in php7, temporarily commented out
 	public function bLogin($username,$password,$userTable='user',$usernameColumnName='user_id',$usernameColumnName='email',$pwColumnName='password'){
 
 		$this->ds->q($userTable,null,array($usernameColumnName,$usernameColumnName,$pwColumnName));
@@ -85,7 +85,7 @@ class backend{
 
 		
 		
-	}
+	} */
 	
 	
 	public function isLoggedIn(){
