@@ -31,10 +31,6 @@ require ROOT.DS.FRFOLDER.DS.'layerPages'.DS.'views'.DS.'snipplets'.DS.'tSnipplet
 			data-tta="true" 
 			data-ttal="Google"
 			href="http://www.google.fi">www.google.fi</a>
-			<a 
-			data-tta="true" 
-			data-ttal="Product"
-			href="http://<?php echo HOST; ?>/cms/login">Login test</a>
 			<!-- <a href="http://<?php // echo HOST; ?>/cms">CMS</a> -->
 			<?php // echo $this->loggedIn; ?>
 		</div>

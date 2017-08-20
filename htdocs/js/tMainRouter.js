@@ -48,7 +48,13 @@
 	    call.onreadystatechange = function() {
 	        if (call.readyState == XMLHttpRequest.DONE ) {
 	           if (call.status == 200) {
-	        	   self.trackPageview();
+	        	   if(window.tRun){
+	                   if (typeof window.tRun.i === "function") {
+	                	   var st1 = (new Date()).getTime();
+	   	        		   window.tRun.sTime=st1;
+	   	        		   window.tRun.i(false, true,true, false, null,false);
+	                   }
+	           		}
 	               document.getElementById("mContainer").innerHTML = call.responseText;
 	           }
 	           else if (call.status == 400) {
@@ -65,22 +71,7 @@
 		
 		
 	}
-	
-	lf.prototype.trackPageview=function (){
-		if(window.tRun.i){
-            if (typeof window.tRun.i === "function" 
-            	&& typeof window.tRun.ttime === "function") {
-	        		var st1 = (new Date()).getTime();
-	        		window.tRun.sTime=st1;
-	        		window.tRun.i(false, true,true, false, null,false);
-	            } else {
-	                return;  
-	            }
-		}else {
-	            return;
-		}
-		
-	}
+
 	
 	lf.prototype.get=function get(name){
 		   if(name=(new RegExp('[?&]'+encodeURIComponent(name)+'=([^&]*)')).exec(location.search))
