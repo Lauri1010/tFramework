@@ -1,6 +1,6 @@
 # tFramework and conversion analytics
 
-IMPORTANT How to commit changes
+IMPORTANT
 All changes are never updated to the master branch. test your deveopment and create a pull request to the development branch (rather small update or change). If you are working on a spesific feature a new branch is created for that feature. 
 
 Installation instructions (assumes certain folder structures, you may change if you dare :) )
