@@ -24,7 +24,7 @@ class product extends baseFunctions{
 
 		$this->af->getProducts();
 		
-		require $this->getInternalPath(array('layerPages','views','product','index.php'));
+		// require $this->getInternalPath(array('layerPages','views','product','index.php'));
 
 	}
 	

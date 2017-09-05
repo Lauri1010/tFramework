@@ -42,7 +42,7 @@ if(is_array($path)){
 
 	}
 	
-	$rq=dirname(__DIR__).DS.'layerPages'.DS.'paths'.DS.$pathStart.$pageNameEnd;
+	$rq=ROOT.DS.BWEB.DS.'sites'.DS.SITE.DS.'protected'.DS.'paths'.DS.$pathStart.$pageNameEnd;
 	$callClass='tFramework\\'.$callClassName;
 	
 	if(is_file($rq)){

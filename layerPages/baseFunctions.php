@@ -261,33 +261,55 @@ class baseFunctions{
 		return $iPath;
 	}
 	
+	public function getView($type,$viewName){
+	
+		if(is_string($viewName) && is_string($type)){
+			
+			$classPath=strtolower($type);
+			
+			$vPath=SITESP.DS.'views'.DS.$type.DS.$viewName.'.php';
+
+			if(is_file($vPath)){
+				return $vPath;
+			}else{
+				trigger_error("View not found! ", E_USER_ERROR);
+			}
+		
+		}else{
+			trigger_error("View needs to be a string ", E_USER_ERROR);
+		}
+
+	}
+	
 	public function getLogic($type,$callMainFunction=true,$mainFunction='main'){
 
-		$logicName=$type.'Logic';
-		
-		$classPath=strtolower($type);
-		
-		$ra=ROOT.DS.FRFOLDER.DS.'layerBusinessLogic'.DS.$classPath.DS.$type.'Logic.php';
-
-		if(is_file($ra)){
+		if(is_string($type)){
 			
-			require $ra;
+			$logicName=$type.'Logic';
 			
-			$cc='tFramework\\'.$logicName;
+			$classPath=strtolower($type);
 			
-			$this->af=new $cc;
+			$ra=SITESP.DS.'logic'.DS.$type.'Logic.php';
 			
-			if($callMainFunction){
-				$this->af->$mainFunction();
+			if(is_file($ra)){
+					
+				require $ra;
+					
+				$cc='tFramework\\'.$logicName;
+					
+				$this->af=new $cc;
+					
+				if($callMainFunction){
+					$this->af->$mainFunction();
+				}
+			
+			}else{
+				die('Logic not found: '.$ra);
+			
 			}
-	
-		}else{
-			die('Logic not found: '.$ra);
-			
 			
 		}
 
-		
 	}
 	
 

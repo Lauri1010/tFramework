@@ -11,6 +11,8 @@ public $product_category_id_ref_validation = array('required','intiger','max'=>1
 
 public $product_store_id_ref_validation = array('required','intiger','max'=>10,'min'=>1);
 
+public $product_vendor_id_ref_validation = array('intiger','max'=>10,'min'=>1);
+
 public $product_name_validation = array('string','max'=>150,'min'=>1);
 
 public $price_validation = array('decimal','max'=>7,'min'=>1,'decmials'=>2);
@@ -31,6 +33,8 @@ public $product_category_id_ref;
 
 public $product_store_id_ref;
 
+public $product_vendor_id_ref;
+
 public $product_name;
 
 public $price;
@@ -41,6 +45,6 @@ public $image_url;
 
 public $to_be_removed;
 
-public $columns = array('product_id','product_category_id_ref','product_store_id_ref','product_name','price','discount_price','image_url','to_be_removed');
+public $columns = array('product_id','product_category_id_ref','product_store_id_ref','product_vendor_id_ref','product_name','price','discount_price','image_url','to_be_removed');
 
 }?>

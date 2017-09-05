@@ -16,6 +16,31 @@ class database
 
 	public function __construct()
 	{
+		$this->conncect();
+	}
+	
+	public function conncect($dbName=null,$dbHost=null,$dbName=null,$dbUser=null,$dbPassword=null,$options=null){
+		
+		if(is_string($dbName)){
+			$this->dbname=$dbName;
+		}
+		
+		if(is_string($dbHost)){
+			$this->host=$dbHost;
+		}
+		
+		if(is_string($dbName)){
+			$this->dbname=$dbName;
+		}
+		
+		if(is_string($dbUser)){
+			$this->user=$dbUser;
+		}
+		
+		if(is_string($dbPassword)){
+			$this->password=$dbPassword;
+		}
+		
 		// Set DSN
 		$dsn = 'mysql:host=' . $this->host . ';dbname=' . $this->dbname;
 		
@@ -24,7 +49,7 @@ class database
 				PDO::ATTR_PERSISTENT    => true,
 				// PDO::ATTR_PERSISTENT    => false,
 				PDO::ATTR_ERRMODE       => PDO::ERRMODE_EXCEPTION
-				
+		
 		);
 		//Create a new PDO instance
 		try {
@@ -34,6 +59,7 @@ class database
 		catch(PDOException $e) {
 			echo $e->getMessage();
 		}
+		
 	}
 	
 	public function getPdo(){

@@ -324,7 +324,7 @@ function generateHelpersAndModelsAndSqlService($generateHelpers=false,$generateM
 				$databaseSqlService.="namespace tFramework;".PHP_EOL.PHP_EOL;
 				$databaseSqlService.="require ROOT.DS.FRFOLDER.DS.'layerDatabase'.DS.'Sql_service_base.php';".PHP_EOL.PHP_EOL;
 				$databaseSqlService.="class Sql_service_$databaseName extends Sql_service_base{".PHP_EOL.PHP_EOL;;
-				
+				/*
 				$functions='';
 				
 				foreach($tables as $tnArray){
@@ -385,6 +385,8 @@ function generateHelpersAndModelsAndSqlService($generateHelpers=false,$generateM
 				$databaseSqlService.=$functions;
 				
 				$databaseSqlService.=$setters;
+				
+				*/
 				
 				$databaseSqlService.='}'.PHP_EOL.PHP_EOL;
 				

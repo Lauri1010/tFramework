@@ -13,6 +13,8 @@ public $product_category_id_ref_sql='p0.product_category_id_ref';
 
 public $product_store_id_ref_sql='p0.product_store_id_ref';
 
+public $product_vendor_id_ref_sql='p0.product_vendor_id_ref';
+
 public $product_name_sql='p0.product_name';
 
 public $price_sql='p0.price';
@@ -23,12 +25,13 @@ public $image_url_sql='p0.image_url';
 
 public $to_be_removed_sql='p0.to_be_removed';
 
-public $select_columns_sql='p0.product_id,p0.product_category_id_ref,p0.product_store_id_ref,p0.product_name,p0.price,p0.discount_price,p0.image_url,p0.to_be_removed';
+public $select_columns_sql='p0.product_id,p0.product_category_id_ref,p0.product_store_id_ref,p0.product_vendor_id_ref,p0.product_name,p0.price,p0.discount_price,p0.image_url,p0.to_be_removed';
 
 public $product_category_join_sql=' product_category pc1 ON(p0.product_category_id_ref=pc1.product_category_id)';
-public $store_join_sql=' store s2 ON(p0.product_store_id_ref=s2.store_id)';
+public $product_vendor_join_sql=' product_vendor pv2 ON(p0.product_vendor_id_ref=pv2.vendor_id)';
+public $store_join_sql=' store s4 ON(p0.product_store_id_ref=s4.store_id)';
 
-public $insert_into_sql='INSERT INTO product VALUES (:product_id, :product_category_id_ref, :product_store_id_ref, :product_name, :price, :discount_price, :image_url, :to_be_removed)';
+public $insert_into_sql='INSERT INTO product VALUES (:product_id, :product_category_id_ref, :product_store_id_ref, :product_vendor_id_ref, :product_name, :price, :discount_price, :image_url, :to_be_removed)';
 
 public $update_base_sql='UPDATE product SET ';
 
@@ -37,6 +40,8 @@ public $update_product_id_sql='product_id=:product_id';
 public $update_product_category_id_ref_sql='product_category_id_ref=:product_category_id_ref';
 
 public $update_product_store_id_ref_sql='product_store_id_ref=:product_store_id_ref';
+
+public $update_product_vendor_id_ref_sql='product_vendor_id_ref=:product_vendor_id_ref';
 
 public $update_product_name_sql='product_name=:product_name';
 
