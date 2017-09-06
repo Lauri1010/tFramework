@@ -118,7 +118,7 @@ class Sql_service_base{
 		}
 		
 	}
-	// TODO: finish this
+	
 	public function createSqlCommandsArray($query){
 		
 		if(is_string($query)){
@@ -159,7 +159,7 @@ class Sql_service_base{
 		}
 		
 	}
-
+	
 	public function query($dataObject,$limit=null,$offset=null){
 	
 		$selectSql="SELECT ";
@@ -181,10 +181,9 @@ class Sql_service_base{
 		if(isset($dataObject)){
 			
 				if(is_array($dataObject)){
-					
-					foreach($dataObject as $table => $dRow){
-		
-						
+					$table=key($dataObject);
+					$dRow=$dataObject[$table];
+	
 						if(is_array($dRow['columns'])){
 							
 								$modelName='model_'.$table;
@@ -194,45 +193,49 @@ class Sql_service_base{
 
 								if(isset($dRow['join'])){
 									
-									$continue=false;
-									$iRow=$dRow['join'];
+									$goDeeper=false;
+									$dTableObject=$dRow['join'];
 									$fromTable=$table;
-						
-										// Loop through each join table name
-										foreach($iRow as $dTable => $dTableObject){
-				
-											do{
-													if(isset($dTableObject['columns'])){
-														
-														if(!is_array($dTableObject['columns'])){
+									$dCount=0;
+									$dRowTempData=array();
+									$goDeep=false;
+								
+										do{
+											// Goes the fist path horizontally
+											foreach($dTableObject as $dTable => $dataRow){
+												
+													if(isset($dataRow['columns'])){
+													
+														if(!is_array($dataRow['columns'])){
 															trigger_error("Coumns not an array in join element!", E_USER_ERROR);
 														}
 														
-														$this->generateSelectAndConditions($dTable,$dTableObject['columns'],$selectSql,$whereSql,$havingSql,$sCount,$wCount,$hCount,$binds);
+														$this->generateSelectAndConditions($dTable,$dataRow['columns'],$selectSql,$whereSql,$havingSql,$sCount,$wCount,$hCount,$binds);
 														$this->generateJoinStatement($fromTable,$dTable,$joinSql,$jCount);
-						
-														if(isset($dTableObject['join'])){
-															// Previus table (from table)
-															$fromTable=$dTable;
-															$dTableObject=$dTableObject['join'];
-															reset($dTableObject);
-															
-															// Set from table deeper
-															$dTable=key($dTableObject);
-															$dTableObject=$dTableObject[$dTable];
-															$continue=true;
-														}else{
-															$continue=false;
-														}
+														
+													}else{
+														
+														trigger_error("Columns not an array in join element!", E_USER_ERROR);
+													}
 													
-												}else{
-													
-													trigger_error("Coumns not an array in join element!", E_USER_ERROR);
-												}
-					
-											}while($continue);
-										}
-							
+													// Save vertical joins per table
+													if(isset($dataRow['join'])){
+														$dRowTempData[]=$dataRow['join'];
+														$dRowTempData=$dRowTempData[0];
+													}
+											}
+											
+											if(isset($dRowTempData)){
+												$dTableObject=$dRowTempData;
+												unset($dRowTempData);
+												$fromTable=$dTable;
+												$goDeep=true;
+											}else{
+												$goDeep=false;
+											}
+										
+										}while($goDeep);
+				
 								}
 	
 						}else{
@@ -262,14 +265,12 @@ class Sql_service_base{
 					}
 
 					$sql=$selectSql.$joinSql.$whereSql.$lSql;
-					
+		
 					return $this->eBoundQueryRs($sql,$binds);
 					
 			}else{
 				trigger_error("Data object is not an array!", E_USER_ERROR);
 			}
-		
-		}
 	
 	
 	}
@@ -397,8 +398,6 @@ class Sql_service_base{
 					}else{
 			
 						$cs=$joinToTable.'_'.$joinType.'_sql';
-						
-			
 						$this->setModel($fromTable);
 						
 						if(isset($this->$modelName->$cs)){

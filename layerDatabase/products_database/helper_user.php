@@ -5,19 +5,19 @@ class helper_user{
 
 public $table_name='user';
 
-public $table_alias='u5';
+public $table_alias='u6';
 
-public $user_id_sql='u5.user_id';
+public $user_id_sql='u6.user_id';
 
-public $username_sql='u5.username';
+public $username_sql='u6.username';
 
-public $password_sql='u5.password';
+public $password_sql='u6.password';
 
-public $email_sql='u5.email';
+public $email_sql='u6.email';
 
-public $salt_sql='u5.salt';
+public $salt_sql='u6.salt';
 
-public $select_columns_sql='u5.user_id,u5.username,u5.password,u5.email,u5.salt';
+public $select_columns_sql='u6.user_id,u6.username,u6.password,u6.email,u6.salt';
 
 
 public $insert_into_sql='INSERT INTO user VALUES (:user_id, :username, :password, :email, :salt)';

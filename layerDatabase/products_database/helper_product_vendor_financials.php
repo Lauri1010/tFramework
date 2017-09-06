@@ -5,17 +5,17 @@ class helper_product_vendor_financials{
 
 public $table_name='product_vendor_financials';
 
-public $table_alias='pvf3';
+public $table_alias='pvf4';
 
-public $product_vendor_financials_id_sql='pvf3.product_vendor_financials_id';
+public $product_vendor_financials_id_sql='pvf4.product_vendor_financials_id';
 
-public $balance_sql='pvf3.balance';
+public $balance_sql='pvf4.balance';
 
-public $product_vendor_id_ref_sql='pvf3.product_vendor_id_ref';
+public $product_vendor_id_ref_sql='pvf4.product_vendor_id_ref';
 
-public $select_columns_sql='pvf3.product_vendor_financials_id,pvf3.balance,pvf3.product_vendor_id_ref';
+public $select_columns_sql='pvf4.product_vendor_financials_id,pvf4.balance,pvf4.product_vendor_id_ref';
 
-public $product_vendor_join_sql=' product_vendor pv2 ON(pvf3.product_vendor_id_ref=pv2.vendor_id)';
+public $product_vendor_join_sql=' product_vendor pv2 ON(pvf4.product_vendor_id_ref=pv2.vendor_id)';
 
 public $insert_into_sql='INSERT INTO product_vendor_financials VALUES (:product_vendor_financials_id, :balance, :product_vendor_id_ref)';
 

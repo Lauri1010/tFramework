@@ -29,7 +29,7 @@ public $select_columns_sql='p0.product_id,p0.product_category_id_ref,p0.product_
 
 public $product_category_join_sql=' product_category pc1 ON(p0.product_category_id_ref=pc1.product_category_id)';
 public $product_vendor_join_sql=' product_vendor pv2 ON(p0.product_vendor_id_ref=pv2.vendor_id)';
-public $store_join_sql=' store s4 ON(p0.product_store_id_ref=s4.store_id)';
+public $store_join_sql=' store s5 ON(p0.product_store_id_ref=s5.store_id)';
 
 public $insert_into_sql='INSERT INTO product VALUES (:product_id, :product_category_id_ref, :product_store_id_ref, :product_vendor_id_ref, :product_name, :price, :discount_price, :image_url, :to_be_removed)';
 

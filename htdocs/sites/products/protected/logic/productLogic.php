@@ -66,7 +66,13 @@ class productLogic extends Backend{
 																		)
 																),
 																'join_type'=>'1'
-												)
+														),
+														'product_vendor_accounts'=>array(
+																'columns'=>array(
+																		'account_name'
+																),
+																'join_type'=>'1'
+														),
 											)
 													
 										)

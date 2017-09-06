@@ -34,6 +34,7 @@
            	 	<th>Product category name</th>
            	 	<th>Vendor name</th>
            	 	<th>Balance</th>
+           	 	<th>Account name</th>
         	</tr>
     		</thead>
     		<tbody>
@@ -45,6 +46,7 @@
 					echo "<td>".$product['product_category_name']."</td>";
 					echo "<td>".$product['vendor_name']."</td>";
 					echo "<td>".$product['balance']."</td>";
+					echo "<td>".$product['account_name']."</td>";
 					echo "</tr>";
 				}
 			
