@@ -1,7 +1,7 @@
 # tFramework and conversion analytics
 
 IMPORTANT
-All changes are never updated to the master branch. test your deveopment and create a pull request to the development branch (rather small update or change). If you are working on a spesific feature a new branch is created for that feature. 
+All changes are never updated to the master branch. test your deveopment and create a pull request to the development branch. If you are working on a spesific feature a new branch can be created for it. Remember to test your implementation before creating a pull request :). 
 
 Installation instructions (assumes certain folder structures, you may change if you dare :) )
 
