@@ -1,6 +1,7 @@
 # tFramework and conversion analytics
 
 IMPORTANT
+
 All changes are never updated to the master branch, but to the development branch. New final changes are committed to master via a pull request. If you are working on a spesific feature a new branch is created for that feature. Please test your implementation before committing to development. 
 
 Installation instructions (assumes certain folder structures, you may change if you dare :) )
