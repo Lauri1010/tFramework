@@ -261,7 +261,6 @@ function generateHelpersAndModelsAndSqlService($generateHelpers=false,$generateM
 					
 							foreach($foreignKeyRelationsList as $joinTable => $joinSql){
 									
-								
 								if($fr){
 									$helpers.="public \${$joinTable}_join_sql='$joinSql';";
 									$helpers.=PHP_EOL;
@@ -470,7 +469,7 @@ function generateHelpersAndModelsAndSqlService($generateHelpers=false,$generateM
 				
 				$modelS = "<?php ".PHP_EOL."namespace tFramework; ".PHP_EOL.PHP_EOL;
 				$modelS .= "require ROOT.DS.FRFOLDER.DS.'layerDatabase'.DS.'{$databaseName}'.DS.'helper_$tableName.php'; ".PHP_EOL.PHP_EOL;
-				$modelS .= "class model_$tableName extends helper_$tableName{".PHP_EOL.PHP_EOL;
+				$modelS .= "class schema_$tableName extends helper_$tableName{".PHP_EOL.PHP_EOL;
 				
 				$cnames.="public $".$columnName.";".PHP_EOL.PHP_EOL;
 				$acsa.="'$columnName'";
@@ -502,7 +501,7 @@ function generateHelpersAndModelsAndSqlService($generateHelpers=false,$generateM
 				
 				$modelS.="}?>";
 				
-				$modelFile = ROOT.DS.FRFOLDER.DS.'layerDatabase'.DS.$databaseName.DS.'model_'.$previousTable.'.php';
+				$modelFile = ROOT.DS.FRFOLDER.DS.'layerDatabase'.DS.$databaseName.DS.'schema_'.$previousTable.'.php';
 				
  				if(file_exists($modelFile)){
 					unlink($modelFile);
@@ -516,7 +515,7 @@ function generateHelpersAndModelsAndSqlService($generateHelpers=false,$generateM
 				
 				$modelS = "<?php ".PHP_EOL."namespace tFramework; ".PHP_EOL;
 				$modelS .= "require ROOT.DS.FRFOLDER.DS.'layerDatabase'.DS.'$databaseName'.DS.'helper_$tableName.php'; ".PHP_EOL.PHP_EOL;
-				$modelS .= "class model_$tableName extends helper_$tableName {".PHP_EOL.PHP_EOL;
+				$modelS .= "class schema_$tableName extends helper_$tableName {".PHP_EOL.PHP_EOL;
 				
 				$cnames="public $".$columnName.";".PHP_EOL.PHP_EOL;
 				$acsa="public \$columns = array('$columnName'";

@@ -14,22 +14,56 @@ class productLogic extends Backend{
 	}
 	// TODO: Pending thorough testing of the feature
 	public function getProducts(){
+
+		$sql='';
+		$this->ds->selectColumns($sql,'product',null,true);
+		$this->ds->selectColumns($sql,'product_category',array('product_category_name'));
+		$this->ds->selectColumns($sql,'product_vendor',array('vendor_name'));
+		$this->ds->selectColumns($sql,'product_vendor_accounts',array('account_name'));
+		$this->ds->selectColumns($sql,'product_vendor_financials',array('balance'));
+		$this->ds->joinFrom($sql,'product','product_category','join',true);
+		$this->ds->joinFrom($sql,'product','product_vendor','join');
+		$this->ds->joinFrom($sql,'product_vendor','product_vendor_financials','join');
+		$this->ds->joinFrom($sql,'product_vendor','product_vendor_accounts','join');
+		$this->ds->where($sql,'product','price',array('>','5'),true);
+		$this->ds->where($sql,'product_vendor_financials','balance',array('AND','>','90'));
+		$sql.=' LIMIT 2 ';
+		$this->products=$this->ds->eBoundQueryRs($sql);
+	
+
+/* 		$dataObject=array(
+				'product'=>array(
+						'product_id'=>array('AND','=','2'),
+						'product_name',
+						'price',
+						'join'=>array(
+								'product_category'=>array(
+										'product_category_name'
+								),
+								'product_vendor'=>array(
+										'vendor_name',
+										'join'=>array(
+												'product_vendor_financials'=>array(
+														'balance'=>array(
+																'AND',
+																'>',
+																'20'
+														)
+												),
+												'product_vendor_accounts'=>array(
+														'account_name'
+												)
+										)
+								)
+						)
+				),
+				
+		);
 		
-		// TODO A faster and easier way to create select statement.
-		// TODO: make this faster so no generation occurs, saving to temporary storage
-		$select="product.product_id.(AND,=,2),
-				 product.product_name,
-				 product.price,
-				 product.join.product_category,
-				 product_category.name,
-				 product.join.product_vendor,
-				 product_vendor.vendor_name,
-				 product_vendor.join.product_vendor_financials,
-				 product_vendor.balance.(AND,=,2),
-				 limit.10
-				 "; 
-		
-		
+		foreach($dataObject as $index=>$dRowContent){
+			echo var_dump($dRowContent).'</br/>';
+		}
+		exit;
 		
 		// This would not be used directly, but the above query language would be translated to this and then ultimately to SQL
 		$this->products=$this->ds->query(
@@ -56,26 +90,26 @@ class productLogic extends Backend{
 															'vendor_name'
 												),
 												'join_type'=>'1',
-												'join'=>array(
-														'product_vendor_financials'=>array(
-																'columns'=>array(
-																		'balance'=>array(
-																					'AND',
-																					'>',
-																					'20'
-																		)
-																),
-																'join_type'=>'1'
-														),
-														'product_vendor_accounts'=>array(
-																'columns'=>array(
-																		'account_name'
-																),
-																'join_type'=>'1'
-														),
-											)
+													'join'=>array(
+															'product_vendor_financials'=>array(
+																	'columns'=>array(
+																			'balance'=>array(
+																						'AND',
+																						'>',
+																						'20'
+																			)
+																	),
+																	'join_type'=>'1'
+															),
+															'product_vendor_accounts'=>array(
+																	'columns'=>array(
+																			'account_name'
+																	),
+																	'join_type'=>'1'
+															),
+													)
 													
-										)
+											)
 									)
 									
 					),
@@ -83,7 +117,7 @@ class productLogic extends Backend{
 				),
 			    '10',
 			    null
-			);
+			);  */
 		
 	}
 	

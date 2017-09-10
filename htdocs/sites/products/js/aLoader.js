@@ -23,7 +23,7 @@ features
             // Package index, callback after package has been loaded
         ca(0, boostrap);
     };
-    /*
+    
     var fp2 = function() {
         var boostrap = function() {
         		if(window.tRun){
@@ -35,22 +35,22 @@ features
             }
             // Package index, callback after package has been loaded
         ca(1, boostrap);
-    };*/
+    };
     
     //#### (URL,callback,start to load after previous,async) ####
     var sl = [
         ['http://localhost/js/tMainRouter.js', fp1, false, 1],
         ['http://localhost/js/jquery-3.1.0.min.js', fp1, false, 1],
         ['http://localhost/js/jsMainBinder.js', fp1, false, 1],
-        ['http://localhost/js/jsEvents.js', fp1, false, 1]
+        ['http://localhost/js/jsEvents.js', fp1, false, 1],
         // ['http://localhost:3000/?s=td', fp2, false, 1],
         // ['http://localhost:3000/?s=ta', fp2, false, 1]
     ];
 
     // EDIT THIS to match. Format: Index holder for the package (indexHolder, How many In package)
     var packages = [
-        [0, 4],
-        [0, 2]
+        [0, 4]
+        // [0, 2]
     ];
     var ttid = "1";
     var sll = sl.length;

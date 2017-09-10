@@ -2,7 +2,7 @@
 namespace tFramework; 
 require ROOT.DS.FRFOLDER.DS.'layerDatabase'.DS.'products_database'.DS.'helper_user.php'; 
 
-class model_user extends helper_user {
+class schema_user extends helper_user {
 
 public $user_id_validation = array('primary','intiger','max'=>10,'min'=>1);
 
