@@ -60,14 +60,22 @@ class baseFunctions{
 			$firstUrlElement=current($urlElements);
 			$action=$this->getCallAction($urlElements,$site);
 			if(method_exists($this, $action)){
+				
 				$r=array();
 				if(isset($_GET['r'])){
-					$input = filter_input(INPUT_GET, 'r', FILTER_SANITIZE_NUMBER_FLOAT);
-					$r['r']=$input;
+						$r['r']=preg_replace('/[^-a-zA-Z0-9_]/','',$_GET['r']);
 				}
 
-				$this->$action($lang,$r);
+				if($_SERVER['REQUEST_METHOD'] === 'POST'){
+					$p=array();
+					foreach($_POST as $input => $value){
+						$p[key]=$value;
+					}
+					$r['p']=$p;
+				}
 				
+				$this->$action($lang,$r);
+
 				
 			}else{
 				// The last part of the URL is for item or query
