@@ -13,6 +13,8 @@ class ComposerStaticInit533117f4f826e3fe321ffbb3126f923f
         ),
         'A' => 
         array (
+            'Aura\\Web\\_Config\\' => 17,
+            'Aura\\Web\\' => 9,
             'Aura\\Session\\_Config\\' => 21,
             'Aura\\Session\\' => 13,
             'Aura\\Di\\' => 8,
@@ -25,6 +27,14 @@ class ComposerStaticInit533117f4f826e3fe321ffbb3126f923f
         'Interop\\Container\\' => 
         array (
             0 => __DIR__ . '/..' . '/container-interop/container-interop/src/Interop/Container',
+        ),
+        'Aura\\Web\\_Config\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/aura/web/config',
+        ),
+        'Aura\\Web\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/aura/web/src',
         ),
         'Aura\\Session\\_Config\\' => 
         array (

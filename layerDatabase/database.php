@@ -4,11 +4,6 @@ use PDO;
 
 class database
 {
-	private $host   = DB_HOST;
-	private $user   = DB_USER;
-	private $pass   = DB_PASS;
-	private $dbname = DB_NAME;
-
 	private $dbh;
 	private $error;
 
@@ -16,34 +11,12 @@ class database
 
 	public function __construct()
 	{
-		$this->conncect();
 	}
 	
-	public function conncect($dbName=null,$dbHost=null,$dbName=null,$dbUser=null,$dbPassword=null,$options=null){
-		
-		if(is_string($dbName)){
-			$this->dbname=$dbName;
-		}
-		
-		if(is_string($dbHost)){
-			$this->host=$dbHost;
-		}
-		
-		if(is_string($dbName)){
-			$this->dbname=$dbName;
-		}
-		
-		if(is_string($dbUser)){
-			$this->user=$dbUser;
-		}
-		
-		if(is_string($dbPassword)){
-			$this->password=$dbPassword;
-		}
+	public function conncect(){
 		
 		// Set DSN
-		$dsn = 'mysql:host=' . $this->host . ';dbname=' . $this->dbname;
-		
+		$dsn = 'mysql:host='.config::getConf('dbHost').';dbname='.config::getConf('dbName');
 		// Set options
 		$options = array(
 				PDO::ATTR_PERSISTENT    => true,
@@ -53,13 +26,35 @@ class database
 		);
 		//Create a new PDO instance
 		try {
-			$this->dbh = new PDO($dsn, $this->user, $this->pass, $options);
+			$this->dbh = new PDO($dsn, config::getConf('dbUser'), config::getConf('dbPass'), $options);
 		}
 		// Catch any errors
 		catch(PDOException $e) {
 			echo $e->getMessage();
 		}
 		
+	}
+	
+	public function conncectWithData($dbHost,$dbName,$dbUser,$dbPass){
+
+		// Set DSN
+		$dsn = 'mysql:host='.$dbHost.';dbname='.$dbName;
+		// Set options
+		$options = array(
+				PDO::ATTR_PERSISTENT    => true,
+				// PDO::ATTR_PERSISTENT    => false,
+				PDO::ATTR_ERRMODE       => PDO::ERRMODE_EXCEPTION
+	
+		);
+		//Create a new PDO instance
+		try {
+			$this->dbh = new PDO($dsn, $dbUser, $dbPass, $options);
+		}
+		// Catch any errors
+		catch(PDOException $e) {
+			echo $e->getMessage();
+		}
+	
 	}
 	
 	public function getPdo(){

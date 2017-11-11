@@ -1,0 +1,2 @@
+php console.php build projectName localhost products_database application JnDdZm0IqJkpM2K1
+php console.php update projectName localhost products_database application JnDdZm0IqJkpM2K1

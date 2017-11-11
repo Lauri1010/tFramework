@@ -1,5 +1,5 @@
 <script>
-(function(window,document){
+/* (function(window,document){
 	if(window.tRun.i){
         if (typeof window.tRun.i === "function" && window.tRun.fVtracked) {
             window.tRun.i(ttid, true,true, false, null,false);
@@ -14,5 +14,5 @@
 		}else {
             return;
 		}
-})(window,document);
+})(window,document); */
 </script>

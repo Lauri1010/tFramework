@@ -3,7 +3,7 @@
  * Note: to use this validator the forms have to use a naming convention.
  * Each form input field is to be named after the model ones.
  * There are no view form generators (as of yet). 
- * 
+ * @author Lauri Turunen
  */
 namespace tFramework;
 class validator{

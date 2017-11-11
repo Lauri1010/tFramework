@@ -1,1 +1,2 @@
-<?php echo 'packages.blackfire.io/binaries/blackfire-php/1.13.0/blackfire-php-windows_x'.(PHP_INT_SIZE-4?64:86).'-php-'.(10*PHP_VERSION).(PHP_ZTS?'':'_nts').'.dll'; 
+<?php
+echo 'hello';

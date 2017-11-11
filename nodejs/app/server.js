@@ -83,12 +83,12 @@ app.get('/', function (req, res) {
 
 		}else if(s=='ta'){
 
-			  fs.readFile(__dirname+'/targeting_standalone.js', function(err, data) {
+/*			  fs.readFile(__dirname+'/targeting_standalone.js', function(err, data) {
 				  res.statusCode = 200;
 				  res.setHeader('Content-Type', 'application/javascript');
 				  res.write(data);
 				  res.end();
-			  });
+			  });*/
 
 		}else if(s=='c'){
 			  pCall();

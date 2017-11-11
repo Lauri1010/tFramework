@@ -43,10 +43,16 @@ class cmsLogic extends backend{
 	
 	public function authenticate($username,$password,$userTable='user',$usernameColumnName='user_id',$usernameColumnName='email',$pwColumnName='password'){
 	
-
-		$this->ds->q($userTable,null,array($usernameColumnName,$usernameColumnName,$pwColumnName));
-		$this->ds->where($userTable, $usernameColumnName, '=',$username);
-		$this->ds->setLimitAndOffset(1);
+		if(empty($this->ds->pdo)){
+			$this->initiatePdo();
+		}
+		
+		$this->ds->prepare('SELECT username, password, email FROM user WHERE user_id = :userId');
+		
+		$db->bind(':fname', 'Jenny');
+		
+		$row = $db->single();
+		
 		
 		$userResult=$this->ds->qd();
 
@@ -96,6 +102,7 @@ class cmsLogic extends backend{
 	
 	public function generateInputElement($tableName,$tableColumn,$type,$cols=null,$rows=null){
 	
+		// TODO: refactored, update
 		$getService='get_'.$tableName.'_model_value';
 		$validationRow=$tableColumn.'_validation';
 	
@@ -343,10 +350,10 @@ class cmsLogic extends backend{
 	 * Helper function to create a dropdown.
 	 *
 	 * */
-	
+	// TODO: refactored, update
 	public function dropDown($currentTableName,$currentTableColumnRef,$refTable,$refColumnId,$refColumnName,$inputClass=null){
 	
-	
+		
 		$getService='get_'.$currentTableName.'_model_value';
 		$validationRow=$currentTableColumnRef.'_validation';
 	

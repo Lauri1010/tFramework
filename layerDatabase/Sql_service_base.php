@@ -1,6 +1,9 @@
 <?php
 namespace tFramework;
-
+/**
+ * @author Lauri Turunen
+ *
+ */
 class Sql_service_base{
 	
 	public $pdo;
@@ -18,14 +21,13 @@ class Sql_service_base{
 	public $sqlUpdate;
 	public $validation_errors;
 	public $validation_errors_exists;
-	protected $binds;
 	protected $aBindCount;
 	protected $previousTable;
 	
 	// The first row of column selection
 	protected $firstRow;
 
-	function __construct($ipdo=true) {
+	function __construct($ipdo=false) {
 		
 		if($ipdo){
 			$this->initiatePdo();
@@ -36,19 +38,72 @@ class Sql_service_base{
 		$this->previousTable=null;
 		$this->firstRow=true;
 		$this->validation_errors=array();
-		$this->binds=array();
 		$this->aBindCount=0;
 	}
 	
-	function getModelTemplate($modelName){
+	public function getSqlQueryObject(){
 		
-		if(is_string($modelName)){
-			$modelName='model';
-			require ROOT.DS.FRFOLDER.DS.'layerDatabase'.DS.$modelName.'.php';
-			return new $modelName();
+		$className='sqlQueryObject';
+		$fullClassName='tFramework\\'.$className;
+
+			$rt=ROOT.DS.FRFOLDER.DS.'layerDatabase'.DS.$className.'.php';
+				
+			if(is_file($rt)){
+				require $rt;
+				return new $fullClassName();
+			}else{
+				trigger_error("Class does not exist with path ".$rt, E_USER_ERROR);
+			}
+	
+	}
+	
+	public function getFromAPCu($key){
+		
+		if(is_string($key)){
+			
+			if(extension_loaded('apcu')){
+				
+				if (apcu_exists($key)) {
+					return apcu_fetch($key);
+				} else {
+					return false;
+				}
+					
+			}
+
+		}else{
+			trigger_error("Key has to be a string", E_USER_ERROR);
 		}
 		
 	}
+	
+	public function setToAPCu($key,$value){
+	
+		if(is_string($key)){
+				
+			if(extension_loaded('apcu')){
+				apcu_store($key, $value);
+			}
+	
+		}else{
+			trigger_error("Key has to be a string", E_USER_ERROR);
+		}
+	
+	}
+	
+	public function ifInAPCu($key){
+		
+		if(extension_loaded('apcu')){
+			return apcu_exists($key);
+			
+		}else{
+			return false;
+		}
+		
+		
+	}
+	
+
 	
 /* 	private function connectDatabase($dbName,$dbHost,$dbName,$dbUser=null,$dbPassword=null){
 		
@@ -61,484 +116,87 @@ class Sql_service_base{
 	} */
 	
 	
-	public function initiatePdo(){
+	protected function initiatePdo(){
 	
 		if(empty($this->pdo)){
-				
 			require ROOT.DS.FRFOLDER.DS.'layerDatabase'.DS.'database.php';
-	
 			$this->pdo=new database();
+			$this->pdo->conncect();
 	
 		}
 	
 	}
 	
-	public function setSchema($table){
-
-		try{
-			
-			$newClass=false;
-
-			$modelName='schema_'.$table;
-			$modelCallClass='tFramework\\'.$modelName;
-
-			if(!isset($this->$modelName)){
-				
-				$rt=ROOT.DS.FRFOLDER.DS.'layerDatabase'.DS.DB_NAME.DS.$modelName.'.php';
-					
-				if(is_file($rt)){
-					require $rt;
-					$this->{$modelName}=new $modelCallClass();
-				}else{
-					trigger_error("Class does not exist with path ".$rt, E_USER_ERROR);
-				}
-				
-			}
+	public function queryDo(&$sqlObject,$sq=false){
 	
-		}catch (Exception $e) {
-			trigger_error("Error in setting helper", E_USER_ERROR);
-		}
-
-		
-	}
+		if($sqlObject instanceof sqlQueryObject){
 	
-	public function eBoundQueryRs($sql){
-
-		if(is_string($sql) && strlen($sql)>0 && isset($this->binds)){
-			
 			if(empty($this->pdo)){
 				$this->initiatePdo();
 			}
-			
-			$this->pdo->prepare($sql);
+			$sql=$sqlObject->getQuerySql();
+			$binds=$sqlObject->getBinds();
+	
+			if(!empty($sql)){
 				
-			if(sizeof($this->binds)>0){
-
-				foreach($this->binds as $bKey => $bValue){
-						
-					$this->pdo->bind($bKey,$bValue);
-						
+				$this->pdo->prepare($sql);
+				if(!empty($binds)){
+					if(sizeof($binds)>0){
+					
+						foreach($binds as $bKey => $bValue){
+					
+							$this->pdo->bind($bKey,$bValue);
+					
+						}
+					
+					}
 				}
-				
-			}
+				unset($sqlObject);
+				if($sq){
+					return $this->pdo->single();
+				}else{
+					return $this->pdo->resultset();
+				}
 
-			return $this->pdo->resultset();
+			}else{
+				trigger_error("Sql data object does not contain data!", E_USER_ERROR);
+			}
 			
+	
+		}else{
+			trigger_error("Improper data set", E_USER_ERROR);
+		}
+	
+	}
+
+	public function queryRs($sql,$binds=array()){
+	
+		if(is_sring($sql) && strlen($sql)>0 && is_array($binds)){
+
+			if(empty($this->pdo)){
+				$this->initiatePdo();
+			}
+				
+			$this->pdo->prepare($sql);
+	
+			if(sizeof($binds)>0){
+	
+				foreach($binds as $bKey => $bValue){
+	
+					$this->pdo->bind($bKey,$bValue);
+	
+				}
+	
+			}
+	
+			return $this->pdo->resultset();
+				
 		}else{
 			trigger_error("Sql needs to be set", E_USER_ERROR);
 		}
-		
-	}
-	
-	public function selectColumns(&$sql,$table,$columns=null,$wSql=false){
-		if(is_string($sql) && is_string($table)){
-			$this->setSchema($table);
-			$schemaName='schema_'.$table;
-			
-			if($wSql){
-				$sql='SELECT';
-			}
-			
-			if(isset($columns)){
-				
-				if(is_array($columns)){
-			
-					foreach($columns as $index=>$column){
-						
-						if(is_string($column)){
-							$cName=$column.'_sql';
-							if(isset($this->$schemaName->$cName)){
-								if($wSql){
-									$sql.=$this->$schemaName->$cName;
-								}else{
-									$sql.=','.$this->$schemaName->$cName;
-								}
-							}else{
-								trigger_error("Malformed table column data given.", E_USER_ERROR);
-							}
-						
-						}
-						
-					}
-					
-				}else{
-					trigger_error("Malformed table column data given.", E_USER_ERROR);
-				}
-				
-			}else{
-				
-				$csName='select_columns_sql';
-				if(isset($this->$schemaName->$csName)){
-					$sql.=' '.$this->$schemaName->$csName;
-				}
-				
-			}
-	
-		}else{
-			trigger_error("Malformed table data given ", E_USER_ERROR);
-		}
-	}
-	
-	public function joinFrom(&$sql,$table,$toTable,$joinType,$wSql=false){
-		if(is_string($sql) && is_string($table) && is_string($toTable) && is_string($joinType)){
-
-			$this->setSchema($table);
-			$schemaName='schema_'.$table;
-			$toJoinSql=$toTable.'_join_sql';
-				
-			if(isset($this->$schemaName->$toJoinSql)){
-				
-				if($wSql){
-					$sql.=' FROM '.$this->$schemaName->table_name.' '.$this->$schemaName->table_alias;
-				}
-				
-				$sql.=' '.$joinType.$this->$schemaName->$toJoinSql.' ';
-	
-			}
-				
-		}else{
-			trigger_error("Malformed table data given ", E_USER_ERROR);
-		}
-	}
-	
-	public function where(&$sql,$table,$column,$conditions,$wSql=false){
-		
-		if(is_string($sql) && is_string($table) && is_string($column) && is_array($conditions)){
-			
-			
-				if(
-					($wSql && isset($conditions[0]) && isset($conditions[1])) 
-					||
-					(!$wSql && isset($conditions[0]) && isset($conditions[1]) && isset($conditions[2])) 
-				){
-	
-					
-					if($wSql){
-						$this->aBindCount=0;
-						
-						if(
-						!preg_match("/^=$|^>$|^<$|^>=$|^<=$|^<>$|^!=$|^like$/", $conditions[0])
-						&&
-						!is_string($conditions[1])
-						){
-							trigger_error("Malformed columns condition data", E_USER_ERROR);
-						}
-						
-						
-						
-					}else{
-						
-						if(
-						(
-						!$conditions[0]=="AND" || !$conditions[0]=="OR")
-						&&
-						!preg_match("/^=$|^>$|^<$|^>=$|^<=$|^<>$|^!=$|^like$/", $conditions[1])
-						&&
-						!is_string($conditions[2])
-						){
-							trigger_error("Malformed columns condition data", E_USER_ERROR);
-						}
-						
-						
-					}
-					
-						$this->setSchema($table);
-						$cnSql=$column.'_sql';
-						$schemaName='schema_'.$table;
-		
-						if(isset($this->$schemaName->$cnSql) && isset($this->aBindCount)){
-								
-							$pName=$this->aBindCount.$column;
-							$alias=':'.$pName;
-							
-							if($wSql){
-								
-								$sql.=' WHERE '.$this->$schemaName->$cnSql.' '.$conditions[0].' '.$alias;
-								$this->binds[$alias]=$conditions[1];
-							}else{
-								$sql.=' '.$conditions[0].' '.$this->$schemaName->$cnSql.' '.$conditions[1].' '.$alias;
-								$this->binds[$alias]=$conditions[2];
-							}
-							
-							$this->aBindCount++;
-							
-						}else{
-							trigger_error("Malformed model data", E_USER_ERROR);
-						}
-							
-			
-			
-				}else{
-					trigger_error("Malformed data given ", E_USER_ERROR);
-				}
-			
-			
-		}else{
-			trigger_error("Malformed data given ", E_USER_ERROR);
-		}
-		
-		
-	}
-	
-	
-	/*  10.9.2017 This function has been refactored in favour of a simpler solution
-	 */
-	public function query($dataObject,$limit=null,$offset=null){
-	
-		$selectSql="SELECT ";
-		$whereSql=" WHERE ";
-		$havingSql=" HAVING ";
-		$limitSql=" LIMIT ";
-		$offsetSql=" OFFSET ";
-		$joinSql="";
-		$lSql="";
-		$sCount=0;
-		$wCount=0;
-		$hCount=0;
-		$jCount=0;
-		$as=0;
-		$helper;
-		$joinObject;
-		$binds=array();
-	
-		if(isset($dataObject)){
-			
-				if(is_array($dataObject)){
-					$table=key($dataObject);
-					$dRow=$dataObject[$table];
-	
-						if(is_array($dRow['columns'])){
-							
-								$modelName='model_'.$table;
-								
-								$this->generateJoinStatement($table,null,$joinSql,$jCount);
-								$this->generateSelectAndConditions($table,$dRow['columns'],$selectSql,$whereSql,$havingSql,$sCount,$wCount,$hCount,$binds);
-
-								if(isset($dRow['join'])){
-									
-									$goDeeper=false;
-									$dTableObject=$dRow['join'];
-									$fromTable=$table;
-									$dCount=0;
-									$dRowTempData=array();
-									$goDeep=false;
-								
-										do{
-											// Goes the fist path horizontally
-											foreach($dTableObject as $dTable => $dataRow){
-												
-													if(isset($dataRow['columns'])){
-													
-														if(!is_array($dataRow['columns'])){
-															trigger_error("Coumns not an array in join element!", E_USER_ERROR);
-														}
-														
-														$this->generateSelectAndConditions($dTable,$dataRow['columns'],$selectSql,$whereSql,$havingSql,$sCount,$wCount,$hCount,$binds);
-														$this->generateJoinStatement($fromTable,$dTable,$joinSql,$jCount);
-														
-													}else{
-														
-														trigger_error("Columns not an array in join element!", E_USER_ERROR);
-													}
-													
-													// Save vertical joins per table
-													if(isset($dataRow['join'])){
-														$dRowTempData[]=$dataRow['join'];
-														$dRowTempData=$dRowTempData[0];
-													}
-											}
-											
-											if(isset($dRowTempData)){
-												$dTableObject=$dRowTempData;
-												unset($dRowTempData);
-												$fromTable=$dTable;
-												$goDeep=true;
-											}else{
-												$goDeep=false;
-											}
-										
-										}while($goDeep);
-				
-								}
-	
-						}else{
-							trigger_error("Tables and columns not an array!", E_USER_ERROR);
-						}
-					}
-					
-					if($wCount==0){
-						$whereSql="";
-					}
-					
-					if($jCount==0){
-						$joinSql="";
-					}
-					
-					if($hCount==0){
-						$havingSql="";
-					}
-					
-					if(is_string($limit)){
-						$lSql.=" LIMIT $limit";
-						
-						if(is_string($offset)){
-							$lSql.=" OFFSET $offset";
-						}
-						
-					}
-
-					$sql=$selectSql.$joinSql.$whereSql.$lSql;
-		
-					return $this->eBoundQueryRs($sql,$binds);
-					
-			}else{
-				trigger_error("Data object is not an array!", E_USER_ERROR);
-			}
-	
 	
 	}
-	
-	private function generateSelectAndConditions($table,$columns,&$selectSql,&$whereSql,&$havingSql,&$sCount,&$wCount,&$hCount,&$binds){
-		
-		if(is_string($table) 
-		&& is_array($columns) 
-		&& is_string($whereSql) 
-		&& is_string($havingSql)
-		&& is_numeric($sCount)
-		&& is_array($binds)){
-				
-				foreach($columns as $index=>$column){
-					
-					if(is_array($column) || is_string($column)){
-		
-						$cName="";
-						$modelName='model_'.$table;
-						
-						if(is_array($column)){
-						
-							if(!(is_string($index) && isset($column[0]) && isset($column[1]) && isset($column[2]))){
-								trigger_error("Malformed columns array", E_USER_ERROR);
-							}
-							
-							$cName=$index;
-				
-							$condition=$column[0];
-							$comparison=$column[1];
-							$comparisonValue=$column[2];
-							
-								if(($condition=="AND" || $condition=="OR") &&
-									preg_match("/^=$|^>$|^<$|^>=$|^<=$|^<>$|^!=$|^like$/", $comparison) &&
-									is_string($comparisonValue)
-								){
-									
-					
-									$this->setSchema($table);
-									$cnSql=$cName.'_sql';
-									
-									if(isset($this->$modelName->$cnSql)){
-									
-										$pName=$wCount.$cName;
-										$alias=':'.$pName;
-										$binds[$alias]=$comparisonValue;
-					
-										if($wCount>0){
-											$whereSql.=' '.$condition.' '.$this->$modelName->$cnSql.' '.$comparison.' '.$alias;
-										}else{
-											$whereSql.=' '.$this->$modelName->$cnSql.' '.$comparison.' '.$alias;
-										}
-										$wCount++;
-		
-									}else{
-										trigger_error("Malformed model data", E_USER_ERROR);
-									}
-							
-								}else {
-									trigger_error("Malformed columns condition data", E_USER_ERROR);
-								}
-						}else{
-							$cName=$column;
-						}
-						
-								$cs=$cName.'_sql';
-						
-								$this->setSchema($table);
-								
-								if(isset($this->$modelName->$cs)){
-									
-									if($sCount>0){
-										$selectSql.=','.$this->$modelName->$cs;
-									}else if($sCount==0){
-										$selectSql.=$this->$modelName->$cs;
-									}else{
-										trigger_error("Impossible column count!", E_USER_ERROR);
-									}
-			
-									$sCount++;
-									
-								}else{
-									
-									trigger_error("Model not properly set", E_USER_ERROR);
-								}
-	
-					}else{
-						
-						trigger_error("Malformed columns condition data", E_USER_ERROR);
-					}
 
-
-					
-				}
-				
-		}else{
-			trigger_error("Table needs to be a string ", E_USER_ERROR);
-			
-		}
-		
-	}
-
-	private function generateJoinStatement($fromTable,$joinToTable=null,&$joinSql,&$jCount,$joinType='join'){
-		
-
-		if(is_string($joinSql) && is_string($fromTable) && is_numeric($jCount)){
-
-					$modelName='model_'.$fromTable;
-			
-					if($joinToTable==null){
-						
-						if(empty($joinSql)){
-							$this->setSchema($fromTable);
-							$alias='table_alias';
-							if(isset($this->$modelName->$alias)){
-								$joinSql=" FROM ".$fromTable.' '.$this->$modelName->$alias;
-							}else{
-								trigger_error("Malformed model data", E_USER_ERROR);
-							}
-						}else{
-							trigger_error("Join sql string needs to be empty at this point", E_USER_ERROR);
-						}
-						
-
-					}else{
-			
-						$cs=$joinToTable.'_'.$joinType.'_sql';
-						$this->setSchema($fromTable);
-						
-						if(isset($this->$modelName->$cs)){
-							$joinSql.=' '.$joinType.' '.$this->$modelName->$cs;
-							$jCount++;
-						}else{
-							trigger_error("Malformed model data", E_USER_ERROR);
-						}
-					
-					}
-
-
-		}else{
-			trigger_error("Table needs to be a string ".dbName, E_USER_ERROR);
-			
-		}
-
-	}
 
 	/***
 	 * $model: the model name to use for inserting or updating

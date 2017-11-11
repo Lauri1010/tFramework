@@ -2,6 +2,7 @@
 namespace tFramework;
 use Aura\Auth;
 use Aura\Session;
+use Aura\Web\WebFactory;
 
 class tAuthService{
 	

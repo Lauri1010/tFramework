@@ -1,41 +1,91 @@
 <?php
 namespace tFramework;
+use Aura\Auth;
+use Aura\Session;
+use Aura\Web\WebFactory;
 
 class baseFunctions{
 	
-	protected $actionStart='Action';
+	protected $actionStart='';
 	protected $pageValue;
 	protected $ifg;
 	protected $itemsPerPage=5;
 	protected $page;
+	protected $prevAction;
 	private $calledAction;
 	protected $af;
 	protected $type;
 	private $loggedIn;
+	protected $webFactory;
+	protected $request;
+	protected $response;
+
+	public function setwWebFactory(){
+/* 		$this->webFactory=new WebFactory(array(
+				'_ENV' => $_ENV,
+				'_GET' => $_GET,
+				'_POST' => $_POST,
+				'_COOKIE' => $_COOKIE,
+				'_SERVER' => $_SERVER
+		));
+		$this->request = $this->webFactory->newRequest();
+		$this->response = $this->webFactory->newResponse(); */
+		
+		$this->webFactory = new WebFactory($GLOBALS);
+		$this->response = $this->webFactory->newResponse();
+		$this->request = $this->webFactory->newRequest();
+		
+	}
+	
+	public function startSessionFactory(){
+		$this->sessionFactory = new \Aura\Session\SessionFactory;
+		$this->session = $this->sessionFactory->newInstance($_COOKIE);
+		$this->session->setCookieParams(array('lifetime' => '1209600'));
+		$this->authFactory = new \Aura\Auth\AuthFactory($_COOKIE);
+		$this->auth = $this->authFactory->newInstance();
+		// create the resume service
+		$this->resumeService = $this->authFactory->newResumeService();
+		// use the service to resume any previously-existing session
+		$this->resumeService->resume($this->auth);
+		// $_SESSION has now been repopulated, if a session was started previously,
+		// meaning the $auth object is now populated with its previous values, if any
+		
+	}
 	
 	public function processUrl($urlElements,$lang=null,$homepage=false,$site=false) {
-	
-		$firstUrlElement=current($urlElements);
 		
-		$action=$this->getCallAction($urlElements,$site);
-		
-		if(method_exists($this, $action)){
-	
-			$this->$action($lang);
-	
+		if(is_array($urlElements)){
+			$this->setwWebFactory();
+			reset($urlElements);
+			$firstUrlElement=current($urlElements);
+			$action=$this->getCallAction($urlElements,$site);
+			if(method_exists($this, $action)){
+				$r=array();
+				if(isset($_GET['r'])){
+					$input = filter_input(INPUT_GET, 'r', FILTER_SANITIZE_NUMBER_FLOAT);
+					$r['r']=$input;
+				}
+
+				$this->$action($lang,$r);
+				
+				
+			}else{
+				// The last part of the URL is for item or query
+/* 				if(empty($this->prevAction)){
+
+				}else{ */
+					$this->pageNotFoundAndExit();
+				// }
+
+			}
 		}else{
-			
-			$this->pageNotFoundAndExit();
-			
+			trigger_error("urlElements ".$urlElements." not an array! ", E_USER_ERROR);
 		}
-	
-	
 	}
 
 	
 	
 	public function getCallAction($urlElements,$translate=false,$site=false){
-
 		// we will dtermine what is requested based on the actions
 		
 		$callAction=$this->actionStart;
@@ -52,17 +102,13 @@ class baseFunctions{
 		if(is_numeric($pElementPlace)){
 		
 			$isDigit = ctype_digit((string)$pElementPlace);
-		
 			if($isDigit){
 					
 				$callAction.='Paginator';
-		
 				$this->page=$pElementPlace;
 				
 			}else{
-		
 				$this->pageNotFoundAndExit();
-					
 			}
 		
 		
@@ -71,45 +117,40 @@ class baseFunctions{
 		// Removing the obvious type ULR part for convenience
 		// $urlElements=array_splice($urlElements, 1, 1);
 
-		if(!$site){
+/* 		if(!$site){
 			unset($urlElements[0]);
 			
-		}
-
+		} */
+		$prevAction='';
 		foreach($urlElements as $index => $urlElement){
 
 				if(!is_numeric($urlElement)){
-					
 					if($actionNotSet){
-					
-						$callAction.=ucfirst($urlElement);
+						$callAction.=strtolower($urlElement);
 						$actionNotSet=false;
-							
 					}else{
-					
-						$callAction.=ucfirst($urlElement);
-							
+						$callAction.=ucfirst($urlElement);	
 					}
 					
+/* 					if($index==$lastElement){
+						break;
+					}
+					
+					$prevAction.=$callAction; */
 				}
 
 		}
+		
+/* 		if(!empty($prevAction)){
+			$this->prevAction=$prevAction;
+		} */
 
 		if (strpos($callAction,'?') !== false) {
-			
 			$callAction=substr($callAction, 0, strpos($callAction, "?"));
-			
 		}
 
-		if($callAction==$this->actionStart){
+		return $callAction;
 			
-			return $callAction.'Index';
-			
-		}else{
-			
-			return $callAction;
-			
-		}
 	}
 	
 	/**
@@ -261,13 +302,44 @@ class baseFunctions{
 		return $iPath;
 	}
 	
+	public function printHeaders(){
+		
+/* 		header($this->response->status->get(), true, $this->response->status->getCode());
+		
+		// send non-cookie headers
+		foreach ($this->response->headers->get() as $label => $value) {
+			if (is_array($value)) {
+				foreach ($value as $val) {
+					header("{$label}: {$val}", false);
+				}
+			} else {
+				header("{$label}: {$value}");
+			}
+		}
+		
+		foreach ($this->response->cookies->get() as $name => $cookie) {
+			setcookie(
+					$name,
+					$cookie['value'],
+					$cookie['expire'],
+					$cookie['path'],
+					$cookie['domain'],
+					$cookie['secure'],
+					$cookie['httponly']
+					);
+		}
+		
+		echo $this->response->content->get(); */
+		
+	}
+	
 	public function getView($type,$viewName){
 	
 		if(is_string($viewName) && is_string($type)){
 			
+			// $this->printHeaders();
 			$classPath=strtolower($type);
-			
-			$vPath=SITESP.DS.'views'.DS.$type.DS.$viewName.'.php';
+			$vPath=VIEWSFOLDER.$type.DS.$viewName.'.php';
 
 			if(is_file($vPath)){
 				return $vPath;
@@ -289,7 +361,7 @@ class baseFunctions{
 			
 			$classPath=strtolower($type);
 			
-			$ra=SITESP.DS.'logic'.DS.$type.'Logic.php';
+			$ra=LGFOLDER.$type.'Logic.php';
 			
 			if(is_file($ra)){
 					

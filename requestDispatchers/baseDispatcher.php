@@ -1,12 +1,10 @@
 <?php
-
+namespace tFramework;
 /**
  * Router. Note: is case sensetive
- * 
+ * @author Lauri Turunen
  * 
  */
-
-namespace tFramework;
 
 $pageNameEnd='.php';
 $functionStartName='action';
@@ -20,45 +18,60 @@ if(isset($_GET['lang'])){
 
 $q=null;
 
-$path=explode(',', $pRequest);
+if(isset($pRequest)){
+	$path=explode(',', $pRequest);
+}else{
+
+	if (strpos($url, '?') !== false) {
+	    $url=explode("?", $url, 2)[0];
+	}
+	
+	if($url=='/'){
+		$path=array('site');
+	}else{
+		$path=array();
+		$item='';
+		$srLen=strlen($url);
+		for ($i = 0; $i < $srLen; $i++){
+			if($i>0){
+				$char=mb_substr($url,$i,1);
+				if($char=='/'){
+					$path[]=$item;
+					$item='';
+				}else{
+					$item.=$char;
+				}
+				
+			}
+
+		}
+		// Save is no cutoff
+		if(!empty($item)){
+			$path[]=$item;
+		}		
+	}
+}
 
 // Used to determine the call to the right path class. Naming conventions handles by caller
 $pathStart=strtolower($path[0]);
 $callClassName=ucfirst($path[0]);
-
 if(is_array($path)){
-	
-	$pl=count($path);
-	
-	// Used to call the exact function in the path class
-	$pathFunction=$pathStart;
-	
-	for ($i = 0; $i < $pl; $i++) {
-		// Naming conventions handles by caller
-		
-		if($i>0){
-			$pathFunction.=ucfirst(ucfirst($path[$i]));
-		}
-
-	}
-	
-	$rq=ROOT.DS.BWEB.DS.'sites'.DS.SITE.DS.'protected'.DS.'paths'.DS.$pathStart.$pageNameEnd;
+	$sPath=sizeof($path);
+	$pLe=$sPath-1;
+	appdata::set('path', $path);
+	appdata::set('lastPath', $path[$pLe]);
+	$rq=PATHSFOLDER.$pathStart.$pageNameEnd;
 	$callClass='tFramework\\'.$callClassName;
 	
-	if(is_file($rq)){
-			
-			require $rq;
-			$pB=new $callClass();	
-			$pB->$pathFunction($lang);
-			
-		}else{
-			
-			pageNotFound();
-			
-		}
+	if(!is_file($rq)){
+		$rq=PATHSFOLDER.'site.php';
+		$callClass='tFramework\\site';	
+	}
+	
+	require $rq;
+	$pB=new $callClass();
+	$pB->processUrl($path,$lang);
 
-	
-	
 }else{
 	
 	trigger_error("Array not returned!", E_USER_ERROR);
