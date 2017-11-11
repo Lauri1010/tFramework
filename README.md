@@ -19,6 +19,12 @@ Remove the index file at /htdocs
    (note that generated schemas exists already). To use your particular app set SITE in boostrap to the correct one. 
 
 You can use bat files if you wish or simply copy framework apps etc manually. 
+
+Note:
+htdocs folder: newxampp/htdocs (or whatever you have set)
+framework folder: newxampp/framework
+apps folder: newxampp/apps
+
 If you wish to test out APCu cache you need to enable it in php ini with opcache for instance (opcache refresh is set to 1): 
 
 [apcu]
