@@ -4,9 +4,18 @@ namespace tFramework;
 class sqlObject{
 	
 	protected $binds;
+	public $tableKeys=array();
 	
 	function __construct() {
 		$this->binds=array();
+	}
+	
+	public function setQueryKeys($table){
+		if(is_string($table)){
+			if(!in_array($value, $this->tableKeys)){
+				$this->tableKeys[]=$table;
+			}
+		}
 	}
 	
 	protected function validate($table,&$binds){
@@ -29,7 +38,6 @@ class sqlObject{
 		}else{
 			trigger_error("table needs to be string and binds an array ", E_USER_ERROR);
 		}
-		
 
 	}
 	

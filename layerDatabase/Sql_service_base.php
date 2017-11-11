@@ -77,12 +77,17 @@ class Sql_service_base{
 		
 	}
 	
-	public function setToAPCu($key,$value){
+	public function setToAPCu($key,$value,$update=false){
 	
 		if(is_string($key)){
 				
 			if(extension_loaded('apcu')){
-				apcu_store($key, $value);
+				if($update){
+					if(apcu_exists($key)){
+						apcu_delete($key);
+					}
+				}
+				return apcu_store($key, $value);
 			}
 	
 		}else{
@@ -101,6 +106,53 @@ class Sql_service_base{
 		}
 		
 		
+	}
+	
+	/**
+	 * When updating the database the updating function will call this and set empty arrays for isUpdated function, 
+	 * which is called in logic functions
+	 * 
+	 * @param array $tables
+	 */
+	
+	public function setUpdated($tables){
+		if(is_array($tables)){
+			foreach($tables as $table){
+				if(is_string($table)){
+					$dc=array();
+					$this->setToAPCu($table,$dc);
+				}
+			}
+		}
+	}
+	
+	/***
+	 * Checking if the tables have been updated. Updated is determined by an empty array for the key
+	 * Update propagated for the key already: there is a key (value 1) in the table array
+	 * 
+	 * @param array $tables
+	 * @param string $key
+	 * @return boolean
+	 */
+	
+	public function isUpdated($tables,$key){
+		if(is_array($tables) && is_string($key)){
+			$result=false;
+			foreach($tables as $table){
+				$updated=$this->getFromAPCu($table);
+				if(is_array($updated)){
+					if(isset($updated[$key])){
+						$result=true;
+					}else{
+						// This update has been done for the spesified cache key. When update is done again. the key is removed
+						$updated[$key]=1;
+						$result=$this->setToAPCu($table,$updated,true);
+					}
+				}
+
+			}
+			return $result;
+		}
 	}
 	
 

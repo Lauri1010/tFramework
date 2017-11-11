@@ -49,20 +49,20 @@ if ( get_magic_quotes_gpc() ) {
  * Setting APCu caching auto update table
  *
  */
-function setAPCuSchema(){
+/* function setAPCuSchema(){
 	if(extension_loaded('apcu')){
 		if (!apcu_exists('tRefresh')) {
 			apcu_store('tUpdates',array());
 		}
 	}
 	
-}
+} */
 
 /**
  * Remove keys from APCu (Usually used when something has been updated to database). 
  *
  */
-function refreshAPCuSchema(){
+/* function refreshAPCuSchema(){
 	if(extension_loaded('apcu')){
 		if (apcu_exists('tRefresh')) {
 			$rk=apcu_fetch('tRefresh');
@@ -76,14 +76,14 @@ function refreshAPCuSchema(){
 		}
 	}
 
-}
+} */
 
 /** Get Required Files **/
 setReporting();
 removeMagicQuotes();
 // unregisterGlobals();
-setAPCuSchema();
-refreshAPCuSchema();
+// setAPCuSchema();
+// refreshAPCuSchema();
 // callHook();
 
 class appdata{

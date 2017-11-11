@@ -108,7 +108,7 @@ class sqlQueryObject extends sqlObject{
 				}else{
 					trigger_error("No schema set for join ", E_USER_ERROR);
 				}
-			
+				
 			}else{
 				trigger_error("Join type not supported ", E_USER_ERROR);
 			}
