@@ -594,7 +594,7 @@ class Sql_service_base{
 		}
 		
 	}
-	
+	// TODO: undergoing refactoring!
 	public function update($modelName,$updateIdColumn,$updateId,$redirect='index'){
 		
 		$getModelService='get_'.$modelName.'_model_value';
