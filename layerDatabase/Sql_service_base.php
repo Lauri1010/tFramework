@@ -1,6 +1,9 @@
 <?php
 namespace tFramework;
-
+/**
+ * @author Lauri Turunen
+ *
+ */
 class Sql_service_base{
 	
 	public $pdo;
@@ -14,18 +17,17 @@ class Sql_service_base{
 	public $orderBy;
 	public $limit;
 	public $offset;
-	
 	public $sqlQuery;
 	public $sqlUpdate;
 	public $validation_errors;
 	public $validation_errors_exists;
-	
+	protected $aBindCount;
 	protected $previousTable;
 	
 	// The first row of column selection
 	protected $firstRow;
 
-	function __construct($ipdo=true) {
+	function __construct($ipdo=false) {
 		
 		if($ipdo){
 			$this->initiatePdo();
@@ -36,623 +38,414 @@ class Sql_service_base{
 		$this->previousTable=null;
 		$this->firstRow=true;
 		$this->validation_errors=array();
+		$this->aBindCount=0;
 	}
 	
-	public function test(){
+	public function getSqlQueryObject(){
 		
+		$className='sqlQueryObject';
+		$fullClassName='tFramework\\'.$className;
 
-		
-	}
-	
-	
-	public function initiatePdo(){
-	
-		if(empty($this->pdo)){
+			$rt=ROOT.DS.FRFOLDER.DS.'layerDatabase'.DS.$className.'.php';
 				
-			require ROOT.DS.FRFOLDER.DS.'layerDatabase'.DS.'database.php';
-	
-			$this->pdo=new database();
-	
-		}
-	
-	}
-	
-	/**
-	 * Function to build the sql queries and joins
-	 * 
-	 * @param unknown $table
-	 * @param string $columns
-	 * @param string $joinType
-	 */
-	
-	public function q($table,$joinTable=null,$columns=null,$joinType='JOIN'){
-	
-		if(empty($this->select)){
-			$this->select='SELECT ';
-			$this->firstRow=true;
-		}
-
-		$getParameterService='get_'.$table.'_model_value';
-
-		if(method_exists($this,$getParameterService)){
-
-			if($columns==null){
-			
-				if($this->firstRow){
-					
-					$this->select.=' '.$this->$getParameterService("select_columns_sql");
-					
-				}else{
-					
-					$this->select.=' ,'.$this->$getParameterService("select_columns_sql");
-					
-				}
-			
+			if(is_file($rt)){
+				require $rt;
+				return new $fullClassName();
 			}else{
-				
-				if(is_array($columns)){
-					
-					foreach($columns as $index => $column){
-						
-						$getColumnSql=$column.'_sql';
-						
-						if($index>0){
-							
-							$this->select.=', '.$this->$getParameterService($getColumnSql);
-
-						}else{
-							
-							if($this->firstRow){
-								$this->select.=' '.$this->$getParameterService($getColumnSql);
-							}else{
-								$this->select.=', '.$this->$getParameterService($getColumnSql);
-							}
+				trigger_error("Class does not exist with path ".$rt, E_USER_ERROR);
+			}
 	
-						}
+	}
+	
+	public function getFromAPCu($key){
+		
+		if(is_string($key)){
+			
+			if(extension_loaded('apcu')){
+				
+				if (apcu_exists($key)) {
+					return apcu_fetch($key);
+				} else {
+					return false;
+				}
+					
+			}
 
+		}else{
+			trigger_error("Key has to be a string", E_USER_ERROR);
+		}
+		
+	}
+	
+	public function setToAPCu($key,$value,$update=false){
+	
+		if(is_string($key)){
+				
+			if(extension_loaded('apcu')){
+				if($update){
+					if(apcu_exists($key)){
+						apcu_delete($key);
 					}
-	
 				}
+				return apcu_store($key, $value);
+			}
 	
-			}
-			
 		}else{
-
-			trigger_error("Cannot get the helper class ".$getParameterService, E_USER_ERROR); 
-			
+			trigger_error("Key has to be a string", E_USER_ERROR);
 		}
-		
-		// Forming the join statements
-		
-		
-		if(empty($this->join) && $this->firstRow){
-			
-			if(isset($this->$table)){
-				
-				$this->firstRow=false;
-				
-				$alias=$this->$table->table_alias;
-				
-				$this->join=" FROM $table $alias ";
-				
-				$this->previousTable=$table;
-				
-			}else{
-					
-				// Create new (above) 
-					
-				trigger_error("Table helper $table should be initiated in join function", E_USER_ERROR);
-					
-			}
-			
-		}else{
-			
-			if($joinTable!=null){
-
-				$jStatement=$table.'_join_sql';
-				
-				$joinFromService='get_'.$joinTable.'_model_value';
-				
-				$this->join.=" ".$joinType." ".$this->$joinFromService($jStatement);
-
-			}else{
-				
-				trigger_error("From which table to join is empty ".$this->join, E_USER_ERROR);
-				
-			}
-
-			
-		}
-		
 	
 	}
 	
-	
-	/**
-	 * @param unknown $table
-	 * @param unknown $column
-	 * @param unknown $condition the actual SQL of the condition
-	 */
-	
-	public function where($table,$column,$conditionType,$condition){
+	public function ifInAPCu($key){
 		
-		$getParameterService='get_'.$table.'_model_value';
-		
-		if(method_exists($this,$getParameterService)){
-			
-			$conditionColumn=$this->$getParameterService($column.'_sql');
-		
-			if(empty($this->condition)){
-				$this->condition=' WHERE ';
-			}
-			
-			$bindedAlias=':'.$column;
-			
-			$this->condition.=$conditionColumn.' '.$conditionType.' '.$bindedAlias;
-
-			if(!isset($this->conditionBindList)){
-				
-				$this->conditionBindList=array();
-
-			}
-
-			$this->conditionBindList[]=array($bindedAlias,$condition);
-	
-		}
-		
-		
-	}
-
-	public function setLimitAndOffset($limit,$offset=null){
-
-		if(is_numeric($limit)){
-
-			if(empty($offset)){
-
-					$this->limit=$limit;
-				
-					$this->limitAndOffset=" LIMIT :limit ";
-
-			}else{
-
-				if(is_numeric($offset)){
-					
-					$this->limit=$limit;
-					$this->offset=$offset;
-					
-					$this->limitAndOffset=" LIMIT :limit OFFSET :offset";
-					
-				}else{
-	
-					trigger_error("Limit and offset have to be numeric ", E_USER_ERROR);
-
-				}
-
-			}
-
+		if(extension_loaded('apcu')){
+			return apcu_exists($key);
 			
 		}else{
-			
-			trigger_error("Limit has to be numeric ", E_USER_ERROR);
-			
+			return false;
 		}
-	
+		
 		
 	}
 	
 	/**
+	 * When updating the database the updating function will call this and set empty arrays for isUpdated function, 
+	 * which is called in logic functions
 	 * 
-	 * @param unknown $table
-	 * @param unknown $column
-	 * @param unknown $orderByType ASC or DESC
+	 * @param array $tables
 	 */
-	public function orderBy($table,$column,$orderByType){
 	
-		$getParameterService='get_'.$table.'_model_value';
-	
-		if(method_exists($this,$getParameterService)){
-				
-			$conditionColumn=$this->$getParameterService($column.'_sql');
-	
-			if(empty($this->orderBy)){
-				$this->orderBy=' ORDER BY ';
-			}
-				
-			$this->orderBy.=$conditionColumn.' '.$orderByType;
-				
-		}
-
-	}
-	
-	
-	public function qd(){
-		$this->setSqlStatement();
-		return $this->getResultSet();
-		
-	}
-	
-
-	public function setSqlStatement(){
-		
-		
-/* 		if(isset($this->conditionBindList)){
-			
-			if(is_array($this->conditionBindList)){
-				
-				foreach($this->conditionBindList as $cArray){
-						
-					$column=$cArray[0];
-					$conditionType=$cArray[1];
-					$condition=$cArray[2];
-		
-					$this->condition.=$column.' '.$conditionType;
-					
+	public function setUpdated($tables){
+		if(is_array($tables)){
+			foreach($tables as $table){
+				if(is_string($table)){
+					$dc=array();
+					$this->setToAPCu($table,$dc);
 				}
-				
 			}
-			
 		}
-		 */
-
-		$this->sqlQuery=$this->select.$this->join.$this->condition.$this->groupBy.$this->orderBy.$this->limitAndOffset;
-		
-
-	}
-	
-	public function resetSqlStatement(){
-		
-		$this->sqlQuery='';
-		$this->select='';
-		$this->join='';
-		$this->condition='';
-		$this->groupBy='';
-		$this->orderBy='';
-		$this->limitAndOffset='';
-		$this->limit='';
-		$this->offset='';
-	}
-	
-	public function getResultSet(){
-		
-		if(!empty($this->sqlQuery)){
-
-			$this->initiatePdo();
-			
-			$this->pdo->prepare($this->sqlQuery);
-
-			if(!empty($this->conditionBindList)){
-				
-				foreach($this->conditionBindList as $bItem){
-
-					$this->pdo->bind($bItem[0], $bItem[1]);
-	
-				}
-
-			}
-			
-			if(!empty($this->limit)){
-				
-				$this->pdo->bind(':limit', $this->limit);
-				
-			}
-			
-			if(!empty($this->offset)){
-				
-				$this->pdo->bind(':offset', $this->offset);
-				
-				
-			}
-
-			if($this->limit==1){
-
-				$this->resetSqlStatement();
-				return $this->pdo->single();
-				
-			}else{
-
-				$this->resetSqlStatement();
-				return $this->pdo->resultset();
-
-			}
-
-
-			
-		}else{
-			
-			trigger_error("The sql query is empty. ", E_USER_ERROR);
-
-		}
-
-		
 	}
 	
 	/***
-	 * $model: the model name to use for inserting or updating
+	 * Checking if the tables have been updated. Updated is determined by an empty array for the key
+	 * Update propagated for the key already: there is a key (value 1) in the table array
 	 * 
+	 * @param array $tables
+	 * @param string $key
+	 * @return boolean
+	 */
+	
+	public function isUpdated($tables,$key){
+		if(is_array($tables) && is_string($key)){
+			$result=false;
+			foreach($tables as $table){
+				$updated=$this->getFromAPCu($table);
+				if(is_array($updated)){
+					if(isset($updated[$key])){
+						$result=true;
+					}else{
+						// This update has been done for the spesified cache key. When update is done again. the key is removed
+						$updated[$key]=1;
+						$result=$this->setToAPCu($table,$updated,true);
+					}
+				}
+
+			}
+			return $result;
+		}
+	}
+	
+
+	
+/* 	private function connectDatabase($dbName,$dbHost,$dbName,$dbUser=null,$dbPassword=null){
+		
+		if(is_string($dbName)){
+			DB_NAME=$dbName;
+		}
+		
+		
+		
+	} */
+	
+	
+	protected function initiatePdo(){
+	
+		if(empty($this->pdo)){
+			require ROOT.DS.FRFOLDER.DS.'layerDatabase'.DS.'database.php';
+			$this->pdo=new database();
+			$this->pdo->conncect();
+	
+		}
+	
+	}
+	
+	public function queryDo(&$sqlObject,$sq=false){
+	
+		if($sqlObject instanceof sqlQueryObject){
+	
+			if(empty($this->pdo)){
+				$this->initiatePdo();
+			}
+			$sql=$sqlObject->getQuerySql();
+			$binds=$sqlObject->getBinds();
+	
+			if(!empty($sql)){
+				
+				$this->pdo->prepare($sql);
+				if(!empty($binds)){
+					if(sizeof($binds)>0){
+					
+						foreach($binds as $bKey => $bValue){
+					
+							$this->pdo->bind($bKey,$bValue);
+					
+						}
+					
+					}
+				}
+				unset($sqlObject);
+				if($sq){
+					return $this->pdo->single();
+				}else{
+					return $this->pdo->resultset();
+				}
+
+			}else{
+				trigger_error("Sql data object does not contain data!", E_USER_ERROR);
+			}
+			
+	
+		}else{
+			trigger_error("Improper data set", E_USER_ERROR);
+		}
+	
+	}
+
+	public function queryRs($sql,$binds=array()){
+	
+		if(is_sring($sql) && strlen($sql)>0 && is_array($binds)){
+
+			if(empty($this->pdo)){
+				$this->initiatePdo();
+			}
+				
+			$this->pdo->prepare($sql);
+	
+			if(sizeof($binds)>0){
+	
+				foreach($binds as $bKey => $bValue){
+	
+					$this->pdo->bind($bKey,$bValue);
+	
+				}
+	
+			}
+	
+			return $this->pdo->resultset();
+				
+		}else{
+			trigger_error("Sql needs to be set", E_USER_ERROR);
+		}
+	
+	}
+
+	
+	
+	public function insert($so){
+	
+		if(isset($_POST)){
+
+			
+			
+			if(is_array($postData) && $so instanceof sqlObject){
+					
+					
+			}else{
+				trigger_error("Query object has to be of the correct format", E_USER_ERROR);
+			}
+		
+		}
+	
+	}
+	
+	
+	
+	
+	/***
+	 * $model: the model name to use for inserting or updating
+	 * NOTE: undergoing refactoring!
 	 * 
 	 */
 	
-	public function save($model,$idColumn){
+// 	public function save($model,$idColumn){
 
-		$this->validation_errors=array();
+// 		$this->validation_errors=array();
 		
-		if(empty($this->$model)){
+// 		if(empty($this->$model)){
 			
-			trigger_error('The model is empty, the model has to be set before calling this function!', E_USER_ERROR);
+// 			trigger_error('The model is empty, the model has to be set before calling this function!', E_USER_ERROR);
 			
-		}else{
+// 		}else{
 
-				$from_table=$this->$model->table_name;
-				$idColumnValue=$this->$model->$idColumn;
+// 				$from_table=$this->$model->table_name;
+// 				$idColumnValue=$this->$model->$idColumn;
 
-				$modelResult=null;
+// 				$modelResult=null;
 				
-				if(!empty($idColumnValue)){
+// 				if(!empty($idColumnValue)){
 	
-					$findTableSql="SELECT $idColumn FROM $from_table WHERE $idColumn=$idColumnValue";
+// 					$findTableSql="SELECT $idColumn FROM $from_table WHERE $idColumn=$idColumnValue";
 				
-					$this->pdo->prepare($findTableSql);
+// 					$this->pdo->prepare($findTableSql);
 					
-					$modelResult=$this->pdo->resultset();
+// 					$modelResult=$this->pdo->resultset();
 					
-				}
+// 				}
 
-				if(empty($this->$model)){
+// 				if(empty($this->$model)){
 
-					trigger_error('The model '.$model.' has not been properly initialized', E_USER_ERROR);
+// 					trigger_error('The model '.$model.' has not been properly initialized', E_USER_ERROR);
 					
-				}
+// 				}
 
-				if($modelResult){
+// 				if($modelResult){
 
-					$updateSql=$this->$model->update_base_sql;
+// 					$updateSql=$this->$model->update_base_sql;
 		
-						$fr=true;
+// 						$fr=true;
 		
-						// Save the set values
-						foreach($this->$model->columns as $column){
+// 						// Save the set values
+// 						foreach($this->$model->columns as $column){
 						
-							if(isset($this->$model->$column)){
+// 							if(isset($this->$model->$column)){
 	
-								$value=$this->$model->$column;
+// 								$value=$this->$model->$column;
 								
-								$updateColumn='update_'.$column.'_sql';
+// 								$updateColumn='update_'.$column.'_sql';
 								
-								if($fr){
+// 								if($fr){
 
-									$updateSql.=$this->$model->$updateColumn;
-									$fr=false;
+// 									$updateSql.=$this->$model->$updateColumn;
+// 									$fr=false;
 									
-								}else{
+// 								}else{
 									
-									$updateSql.=','.$this->$model->$updateColumn;
+// 									$updateSql.=','.$this->$model->$updateColumn;
 									
-								}
+// 								}
 	
-								$vRulesBase=$column.'_validation';
+// 								$vRulesBase=$column.'_validation';
 								
-								$vRules=$this->$model->$vRulesBase;
+// 								$vRules=$this->$model->$vRulesBase;
 								
-								$this->validation_errors[]=$this->validate($vRules,$column,$value);
+// 								$this->validation_errors[]=$this->validate($vRules,$column,$value);
 	
-							}
+// 							}
 								
 						
-						}
+// 						}
 
-						if(!$this->validation_errors_exists){
+// 						if(!$this->validation_errors_exists){
 
-							$updateSql.=" WHERE $idColumn=$idColumnValue ";
+// 							$updateSql.=" WHERE $idColumn=$idColumnValue ";
 							
-							$this->pdo->prepare($updateSql);
+// 							$this->pdo->prepare($updateSql);
 							
-							foreach($this->$model->columns as $column){
+// 							foreach($this->$model->columns as $column){
 		
-								if(isset($this->$model->$column)){
+// 								if(isset($this->$model->$column)){
 							
-									$columnValue=$this->$model->$column;
+// 									$columnValue=$this->$model->$column;
 
-									$this->pdo->bind(':'.$column, $columnValue);
+// 									$this->pdo->bind(':'.$column, $columnValue);
 										
-								}
+// 								}
 			
-							}
+// 							}
 							
-							$this->pdo->execute();
+// 							$this->pdo->execute();
 							
-							// Set the model to null so it can be reused. 
-							$this->$model=null;
+// 							// Set the model to null so it can be reused. 
+// 							$this->$model=null;
 							
-							return true;
+// 							return true;
 						
-						}else{
+// 						}else{
 							
-							return false;
+// 							return false;
 							
-						}
+// 						}
 						
 					
-					}else{
+// 					}else{
 						
-							$mColumns=$this->$model->columns;
+// 							$mColumns=$this->$model->columns;
 	
-							foreach($mColumns as $column){
+// 							foreach($mColumns as $column){
 					
-								if(isset($this->$model->$column)){
+// 								if(isset($this->$model->$column)){
 					
-									$cValue=$this->$model->$column;
+// 									$cValue=$this->$model->$column;
 			
-									$validation_name=$column.'_validation';
+// 									$validation_name=$column.'_validation';
 		
-									$rules=$this->$model->$validation_name;
+// 									$rules=$this->$model->$validation_name;
 									
-									$this->validation_errors[]=$this->validate($rules,$column,$cValue,true);
+// 									$this->validation_errors[]=$this->validate($rules,$column,$cValue,true);
 
-								}else{
+// 								}else{
 					
-									$cValue=$this->$model->$column;
+// 									$cValue=$this->$model->$column;
 									
-									$validation_name=$column.'_validation';
+// 									$validation_name=$column.'_validation';
 		
-									$rules=$this->$model->$validation_name;
+// 									$rules=$this->$model->$validation_name;
 									
-									$this->validation_errors[]=$this->validate($rules,$column,$cValue,true);
+// 									$this->validation_errors[]=$this->validate($rules,$column,$cValue,true);
 									
 									
-								}
-							}
+// 								}
+// 							}
 							
 							
-							if(!$this->validation_errors_exists){
+// 							if(!$this->validation_errors_exists){
 								
-								$insertStatement=$this->$model->insert_into_sql;
+// 								$insertStatement=$this->$model->insert_into_sql;
 								
-								$this->pdo->prepare($insertStatement);
+// 								$this->pdo->prepare($insertStatement);
 								
-								foreach($mColumns as $column){
+// 								foreach($mColumns as $column){
 										
-									if(isset($this->$model->$column)){
+// 									if(isset($this->$model->$column)){
 											
-										$cValue=$this->$model->$column;
+// 										$cValue=$this->$model->$column;
 											
-										$this->pdo->bind(':'.$column,$cValue);
+// 										$this->pdo->bind(':'.$column,$cValue);
 											
-									}else{
+// 									}else{
 											
-										// Some value still needs to be bound, binding null
-										$this->pdo->bind(':'.$column,null);
-									}
+// 										// Some value still needs to be bound, binding null
+// 										$this->pdo->bind(':'.$column,null);
+// 									}
 										
-								}
+// 								}
 								
-								$this->$model=null;
+// 								$this->$model=null;
 								
-								return $this->pdo->execute();
+// 								return $this->pdo->execute();
 								
-							}
+// 							}
 								
 
 
-					}
+// 					}
 
 
-		}
+// 		}
 		
-	}
+// 	}
 	
-	
-	public function validate($rules,$column,$value,$insert=false,$validate=true){
-		
-		$errorMessages=array();
-		
-		if($insert){
-			
-			if(in_array('primary',$rules)){
-				$validate=false;
-				
-			}
-			
-		}
 
-		if($validate){
-
-			foreach($rules as $rule){
-
-					if($rule=='required'){
-							
-						if(empty($value)){
-							$errorMessages[]=$column.' is required ';
-							$this->validation_errors_exists=true;
-						}
-				
-					}else if($rule=='intiger'){
-							
-						if(is_int($value)){
-							
-						}else{
-							
-							if(!ctype_digit($value)){
-								$errorMessages[]=$column.' has to be an integer: ';
-								$this->validation_errors_exists=true;
-							}
-						
-						}
-							
-					}else if($rule=='decimal'){
-	
-						// echo '<p>Decimal column '.$column.$this->is_decimal($value).'    </p>';
-			
-						if(is_int($value)){
-								// Intiger value is okay here
-						}else{
-						
-							if(!is_numeric($value) && !floor($value)!=$value){
-				
-								$errorMessages[]=$column.' has to be a decimal ';
-								$this->validation_errors_exists=true;
-	
-							}
-				
-						}
-							
-							
-					}else if($rule=='string'){
-				
-						if(!is_string($value)){
-							$errorMessages[]=$column.' has to be a string ';
-							$this->validation_errors_exists=true;
-				
-						}
-							
-					}else if($rule=='date'){  // TODO: test this and impelent a view conversion
-				
-						$date = DateTime::createFromFormat('Y-d-m', $value);
-						$dateErrors = DateTime::getLastErrors();
-							
-						if ($dateErrors['warning_count'] + $dateErrors['error_count'] > 0) {
-							$errorMessages[] = $column.' needs to be a valid date! ';
-							$this->validation_errors_exists=true;
-						}
-							
-					}
-				
-				}
-			
-	
-				
-				if(isset($rules['max']) && isset($rules['min'])){
-				
-					$max=$rules['max'];
-				
-					$min=$rules['min'];
-				
-					if(is_string($value)){
-						$lenght=strlen($value);
-							
-					}else{
-						$lenght=strlen((string)$value);
-					}
-				
-					// echo $column.' '.$max.' size: '.$lenght.' <br/><br/> ';
-				
-					if($lenght>=$max){
-							
-						$errorMessages[] = ' The maximum lenght for '. $column.' is '.$max.', current lenght is '.$lenght;
-						$this->validation_errors_exists=true;
-							
-					}
-				
-				}
-			
-			}
-		
-		
-		
-		
-		return $errorMessages;
-		
-	}
-	
 	
 
 	/***
@@ -661,162 +454,162 @@ class Sql_service_base{
 	 */
 	
 	
-	public function insert($modelName,$redirect='index'){
+// 	public function insert($modelName,$redirect='index'){
 		
-		$getModelService='get_'.$modelName.'_model_value';
+// 		$getModelService='get_'.$modelName.'_model_value';
 		
-		if(method_exists($this,$getModelService)){
+// 		if(method_exists($this,$getModelService)){
 			
-			$insertStatement=$this->$getModelService('insert_into_sql');
+// 			$insertStatement=$this->$getModelService('insert_into_sql');
 			
-			$this->pdo->prepare($insertStatement);
+// 			$this->pdo->prepare($insertStatement);
 			
-			if(isset($_POST)){
+// 			if(isset($_POST)){
 			
-				$mColumns=$this->$getModelService('columns');
+// 				$mColumns=$this->$getModelService('columns');
 
-				foreach($mColumns as $column){
+// 				foreach($mColumns as $column){
 				
-					if(isset($_POST[$column])){
+// 					if(isset($_POST[$column])){
 						
-						$cValue=$_POST[$column];
+// 						$cValue=$_POST[$column];
 	
-						$this->pdo->bind(':'.$column,$cValue);
+// 						$this->pdo->bind(':'.$column,$cValue);
 						
-					}else{
+// 					}else{
 						
-						// Some value still needs to be bound, binding null
-						$this->pdo->bind(':'.$column,null);
-					}
+// 						// Some value still needs to be bound, binding null
+// 						$this->pdo->bind(':'.$column,null);
+// 					}
 		
-				}
+// 				}
 				
-				$this->pdo->execute();
+// 				$this->pdo->execute();
 				
-/* 				header('Location: ' . $redirect, true, $permanent ? 301 : 302);
-				exit; */
+// /* 				header('Location: ' . $redirect, true, $permanent ? 301 : 302);
+// 				exit; */
 				
-			}else{
+// 			}else{
 				
-				trigger_error('Updating only allowed for post in this function', E_USER_ERROR);
+// 				trigger_error('Updating only allowed for post in this function', E_USER_ERROR);
 				
-			}
+// 			}
 
 		
-		}else{
+// 		}else{
 			
-			trigger_error('The model '.$modelName.' does not exist!', E_USER_ERROR);
+// 			trigger_error('The model '.$modelName.' does not exist!', E_USER_ERROR);
 			
-		}
+// 		}
 		
-	}
-	
-	public function update($modelName,$updateIdColumn,$updateId,$redirect='index'){
+// 	}
+	// TODO: undergoing refactoring!
+// 	public function update($modelName,$updateIdColumn,$updateId,$redirect='index'){
 		
-		$getModelService='get_'.$modelName.'_model_value';
+// 		$getModelService='get_'.$modelName.'_model_value';
 
-		if(method_exists($this,$getModelService)){
+// 		if(method_exists($this,$getModelService)){
 				
-			$updateStatement=$this->$getModelService('update_base_sql');
-			$binds=array();	
-			$ue=false;
+// 			$updateStatement=$this->$getModelService('update_base_sql');
+// 			$binds=array();	
+// 			$ue=false;
 
-			// POST has to be defined
-			if(isset($_POST)){
+// 			// POST has to be defined
+// 			if(isset($_POST)){
 					
-				$mColumns=$this->$getModelService('columns');
+// 				$mColumns=$this->$getModelService('columns');
 		
-				foreach($mColumns as $index => $column){
+// 				foreach($mColumns as $index => $column){
 		
-					$d=' ';
+// 					$d=' ';
 					
-					if($index > 0){
-						$d=' , ';
+// 					if($index > 0){
+// 						$d=' , ';
 							
-					}
+// 					}
 		
-					if(isset($_POST[$column])){
+// 					if(isset($_POST[$column])){
 		
-						$cValue=$_POST[$column];
+// 						$cValue=$_POST[$column];
 		
-						$updateStatement.=$d.$this->$getModelService('update_'.$column.'_sql');
+// 						$updateStatement.=$d.$this->$getModelService('update_'.$column.'_sql');
 				
-						if($updateIdColumn!=$column){
+// 						if($updateIdColumn!=$column){
 						
-							$binds[]=array(':'.$column,$cValue);
+// 							$binds[]=array(':'.$column,$cValue);
 						
-						}
+// 						}
 			
-					}else{
+// 					}else{
 		
 						
 						
-						$getValidation=$column.'_validation';
+// 						$getValidation=$column.'_validation';
 						
-						$v=$this->$getModelService($getValidation);
+// 						$v=$this->$getModelService($getValidation);
 		
-						if($v[0]=='required' || $v[0]=='unique'){
+// 						if($v[0]=='required' || $v[0]=='unique'){
 							
-							trigger_error('The '.$column.' is required ', E_USER_ERROR);
-							exit;
-						}
+// 							trigger_error('The '.$column.' is required ', E_USER_ERROR);
+// 							exit;
+// 						}
 		
-						$updateStatement.=$d.$this->$getModelService('update_'.$column.'_sql');
+// 						$updateStatement.=$d.$this->$getModelService('update_'.$column.'_sql');
 						
-						if($updateIdColumn!=$column){
+// 						if($updateIdColumn!=$column){
 
-							$binds[]=array(':'.$column,null);
+// 							$binds[]=array(':'.$column,null);
 			
-						}
+// 						}
 	
-					}
+// 					}
 		
-				}
+// 				}
 		
-				$updateStatement.=" WHERE ".$updateIdColumn." = :".$updateIdColumn;
+// 				$updateStatement.=" WHERE ".$updateIdColumn." = :".$updateIdColumn;
 
-				$this->pdo->prepare($updateStatement);
+// 				$this->pdo->prepare($updateStatement);
 				
-				$this->pdo->bind(':'.$updateIdColumn,$updateId);
+// 				$this->pdo->bind(':'.$updateIdColumn,$updateId);
 				
-				foreach($binds as $bArray){
+// 				foreach($binds as $bArray){
 					
-					// echo $bArray[0].':'.$bArray[1].'   ';
-					$this->pdo->bind($bArray[0], $bArray[1]);
+// 					// echo $bArray[0].':'.$bArray[1].'   ';
+// 					$this->pdo->bind($bArray[0], $bArray[1]);
 					
-				}
+// 				}
 
 				
-				$this->pdo->execute();
+// 				$this->pdo->execute();
 				
 	
-				/* 				header('Location: ' . $redirect, true, $permanent ? 301 : 302);
-				 exit; */
+// 				/* 				header('Location: ' . $redirect, true, $permanent ? 301 : 302);
+// 				 exit; */
 		
-			}else{
+// 			}else{
 		
-				trigger_error('Updating only allowed for post in this function', E_USER_ERROR);
+// 				trigger_error('Updating only allowed for post in this function', E_USER_ERROR);
 		
-			}
+// 			}
 		
 		
-		}else{
+// 		}else{
 				
-			trigger_error('The model '.$modelName.' does not exist!', E_USER_ERROR);
+// 			trigger_error('The model '.$modelName.' does not exist!', E_USER_ERROR);
 				
-		}
+// 		}
 		
 		
-	}
+// 	}
 	
 	
 	/** Resets all the values
 	 */
-	public function reset(){
+// 	public function reset(){
 		
 		
 		
-	}
+// 	}
 	
 
 

@@ -1,16 +1,10 @@
 <?php
 namespace tFramework;
 
-
 /**
  * @author Lauri Turunen
- * 
- * This can be used to store business logic that you want to use
- * Note: as a best practice do not bloat this class with functionality 
- * Instead use functions with calls to other classes in lib or other folders using getFunctionality
+ * https://github.com/auraphp/Aura.Session
  */
- 
-
 class backend{
 	
 	public $request;
@@ -19,7 +13,11 @@ class backend{
 	protected $view;
 	public $data;
 	protected $behaviours;
-	private $authService;
+	protected $session;
+	protected $auth;
+	protected $authFactory;
+	protected $sessionFactory;
+	protected $resumeService;
 	
 	public function __construct(){
 		$this->initiateDatabaseService();
@@ -27,10 +25,86 @@ class backend{
 
 	}
 	
-	public function main(){
-		
-		
-		
+	public function authenticate($username,$password,$userTable='user',$usernameColumnName='email',$pwColumnName='password'){
+	
+		$error;
+	
+		/* 		$this->ds->q($userTable,null,array($usernameColumnName,$usernameColumnName,$pwColumnName));
+			$this->ds->where($userTable, $usernameColumnName, "='{$username}'");
+			$this->ds->setLimitAndOffset(1);
+	
+			$userResult=$this->ds->qd();
+	
+			$dbUsername=$userResult[0][$usernameColumnName];
+			$dbPassword=$userResult[0][$pwColumnName]; */
+	
+		/* 		if($username==$dbUsername){
+	
+		if($password==$dbPassword){ */
+	
+		$loginService = $this->authFactory->newLoginService();
+	
+		// use the service to force $auth to a logged-in state
+		// Note username has to be unique !
+	
+		$userdata = array(
+				'username'=>$username,
+		);
+	
+		$loginService->forceLogin($this->auth, $username, $userdata);
+	
+		$status=$this->auth->getStatus();
+	
+		if($status=='VALID'){
+	
+			// TODO: continue this
+			echo $status;
+				
+		}
+	
+	
+		/* 			}else{
+	
+		$error.='<p> Incorrect password. </p>';
+	
+		}
+	
+		}else{
+	
+		$error.='<p> Incorrect username. </p>';
+	
+		} */
+	
+	
+	
+	
+	}
+	
+	public function login($username){
+	
+	
+		$loginService = $this->authFactory->newLoginService();
+	
+		// use the service to force $auth to a logged-in state
+		// Note username has to be unique !
+	
+		$userdata = array(
+				'username'=>$username,
+		);
+	
+		$loginService->forceLogin($this->auth, $username, $userdata);
+	
+		$status=$this->auth->getStatus();
+	
+		return $status;
+	
+	}
+	
+	public function getStatus(){
+	
+		echo $this->auth->getStatus();
+	
+	
 	}
 
 	
@@ -53,11 +127,11 @@ class backend{
 		
 	}
 	
-	
-	/* Change in php7, temporarily commented out
-	public function bLogin($username,$password,$userTable='user',$usernameColumnName='user_id',$usernameColumnName='email',$pwColumnName='password'){
 
-		$this->ds->q($userTable,null,array($usernameColumnName,$usernameColumnName,$pwColumnName));
+	public function bLogin($username,$password,$userTable='user',$usernameColumnName='username',$pwColumnName='password'){
+
+		// TODO: redo this
+/* 		$this->ds->q($userTable,null,array($usernameColumnName,$usernameColumnName,$pwColumnName));
 		$this->ds->where($userTable, $usernameColumnName, '=',$username);
 		$this->ds->setLimitAndOffset(1);
 		
@@ -81,11 +155,9 @@ class backend{
 			return 'Password is wrong';
 			
 			
-		}
+		} */
 
-		
-		
-	} */
+	} 
 	
 	
 	public function isLoggedIn(){
@@ -107,20 +179,15 @@ class backend{
 
 			try {
 
-				$requiredFile=ROOT.DS.FRFOLDER.DS.'layerDatabase'.DS.DB_NAME.DS.'Sql_service_'.DB_NAME.'.php';
+				$requiredFile=DBFOLDER.'Sql_service_'.DB_NAME.'.php';
 				
 				if(is_file($requiredFile)){
-					
-					require ROOT.DS.FRFOLDER.DS.'layerDatabase'.DS.DB_NAME.DS.'Sql_service_'.DB_NAME.'.php';
-					
+					require $requiredFile;
 				}else{
-					
-					trigger_error($requiredFile."is not a file ", E_USER_ERROR);
-					
+					trigger_error($requiredFile." is not a file ", E_USER_ERROR);
 				}
 	
 				$dsName='tFramework\\Sql_service_'.DB_NAME;
-				
 				$this->ds=new $dsName();
 			
 			}catch (Exception $e) {
@@ -146,7 +213,6 @@ class backend{
 	public function redirect($url, $permanent = false)
 	{
 		header('Location: ' . $url, true, $permanent ? 301 : 302);
-	
 		exit();
 	}
 

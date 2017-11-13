@@ -63,174 +63,176 @@
       <div class="hero">
   <div class="row">
     <div class="large-12 columns">
-      <h1>Windows <span>Frequently Asked Questions</span></h1>
+      <h1>Windows <span>经常提到的问题</span></h1>
     </div>
   </div>
 </div>
 <div class="row">
     <div class="large-8 columns">
     <dl class="accordion">
-      <dt>How do I install XAMPP?</dt>
+      <dt>如何安装XAMPP？</dt>
       <dd>
-      <p>XAMPP for Windows exists in three different flavors:</p>
-      <p>Installer:<br />
-      Probably the easiest way to install XAMPP.</p>
+      <p>XAMPP在Windows平台有三个不同版本：</p>
+      <p>安装程序：<br />
+      大概是安装XAMPP最容易的方法了。</p>
       <p>ZIP:<br />
-      For purists: XAMPP as ordinary ZIP archive.</p>
+      为纯净软件爱好者提供的：XAMPP的标准zip压缩包。</p>
       <p>7zip:<br />
-      For purists with low bandwidth: XAMPP as 7zip archive.</p>
-      <p>Note: If you extract the files, there can be false-positives virus warnings.</p>
-      <p><strong>Using the installer:</strong></p>
+      为网速慢的纯净软件爱好者提供的：XAMPP的7zip压缩包。</p>
+      <p>注意：如果你解压文件的话，可能会被杀软误报毒。</p>
+      <p><strong>使用安装程序：</strong></p>
       <p></p>
-      <p>The XAMPP control panel for start/stop Apache, MySQL, FileZilla & Mercury or install these server as services.</p>
-      <p><strong>Installing from ZIP</strong></p>
-      <p>Unzip the zip archives into the folder of your choice. XAMPP is extracting to the subdirectory "C:\xampp" below the selected target directory. Now start the file "setup_xampp.bat", to adjust the XAMPP configuration to your system.</p>
-      <p>If you choose a root directory "C:\" as target, you must not start "setup_xampp.bat".</p>
-      <p>Like with the installer version, you can now use the "XAMPP Control Panel" for additional tasks.</p>
+      <p>XAMPP控制面板可以用于启动/停止Apache, MySQL, FileZilla和Mercury以及将它们安装为服务。</p>
+      <p><strong>通过ZIP安装</strong></p>
+      <p>解压ZIP压缩文件到您选择的文件夹中。 XAMPP被提取到子目录"C:\\xampp"选定的目标目录下。然后启动文件“setup_xampp.bat”进行配置以便XAMPP的配置调整到系统中。</p>
+      <p>如果你选择根目录"C:\\"作为安装目标，你绝对不要启动"setup_xampp.bat"。</p>
+      <p>就像安装版一样，你现在可以使用XAMPP控制面板来完成更多工作。</p>
       </dd>
-      <dt>How can I start XAMPP without setup?</dt>
+      <dt>Does XAMPP include MySQL or MariaDB?</dt>
       <dd>
-      <p>If you extract XAMPP in a top level folder like "C:\" or "D:\", you can start most servers like Apache or MySQL directly without execution of the file "setup_xampp.bat".</p>
-      <p>Not using the setup script, or selecting relative paths in the setup script, is preferred if you are installing XAMPP on a usb drive. Because on each pc such a drive can have an other drive letter. You can switch from absolute to relative paths at any time with the setup script.</p>
-      <p>Using the installer from our Downloads page is the easiest way to install XAMPP. After the installation is complete, you will find XAMPP under   Start | Programs | XAMPP. You can use the XAMPP Control Panel to start/stop all server and also install/uninstall services.</p>
-      <p>The XAMPP control panel for start/stop Apache, MySQL, FileZilla & Mercury or install these server as services.</p>
+      <p>Since XAMPP 5.5.30 and 5.6.14, XAMPP ships MariaDB instead of MySQL. The commands and tools are the same for both.</p>
       </dd>
-      <dt>How do I start and stop XAMPP?</dt>
+      <dt>我如何免安装启动XAMPP？</dt>
       <dd>
-      <p>The universal control center is the "XAMPP Control Panel" (thanks  www.nat32.com). It is started with:</p>
+      <p>如果你将XAMPP解压到一个根目录，比如"C:\\"或者是"D:\\"，你就可以直接启动大多数服务器例如Apache或者MySQL而无需执行文件"setup_xampp.bat"。</p>
+      <p>如果你想在一个U盘上面安装XAMPP的话，不使用安装脚本，或者在安装脚本里面选择相对路径应该会是更好的做法。因为在不同的PC上面U盘的盘符应该都是不一样的。你可以通过安装脚本在任何时候从绝对路径切换到相对路径。</p>
+      <p>下载页面上的安装包版本应该是安装XAMPP的最简单的方式了。安装过程结束之后，你会在开始菜单-程序-XAMPP下找到XAMPP。你可以使用XAMPP的控制面板来启动/停止任意一个服务器或者是安装/卸载服务。</p>
+      <p>XAMPP控制面板可以用于启动/停止Apache, MySQL, FileZilla和Mercury以及将它们安装为服务。</p>
+      </dd>
+      <dt>我如何启动和停止XAMPP？</dt>
+      <dd>
+      <p>通用的控制中心位于XAMPP控制面板(感谢www.nat32.com)。它开始于：</p>
       <p><code>\xampp\xampp-control.exe</code></p>
-      <p>You can also use some batchfiles to start/stop the servers:</p>
+      <p>您也可以使用一些批处理文件来启动/停止服务器：</p>
       <p>
       <ul>
-        <li>Apache &amp; MySQL start:
+        <li>Apache &amp; MySQL 启动:
         <code>\xampp\xampp_start.exe</code></li>
-        <li>Apache &amp; MySQL stop:
+        <li>Apache &amp; MySQL 停止:
         <code>\xampp\xampp_stop.exe</code></li>
-        <li>Apache start:
+        <li>启动Apache
         <code>\xampp\apache_start.bat</code></li>
-        <li>Apache stop:
+        <li>停止Apache
         <code>\xampp\apache_stop.bat</code></li>
-        <li>MySQL start:
+        <li>启动MySQL：
         <code>\xampp\mysql_start.bat</code></li>
-        <li>MySQL stop:
+        <li>停止MySQL：
         <code>\xampp\mysql_stop.bat</code></li>
-        <li>Mercury Mailserver start:
+        <li>启动Mercury邮件服务器：
         <code>\xampp\mercury_start.bat</code></li>
-        <li>Mercury Mailserver stop:
+        <li>停止Mercury邮件服务器：
         <code>\xampp\mercury_stop.bat</code></li>
-        <li>FileZilla Server start:
+        <li>启动FileZilla服务器：
         <code>\xampp\filezilla_start.bat</code></li>
-        <li>FileZilla Server stop:
+        <li>停止FileZilla服务器：
         <code>\xampp\filezilla_stop.bat</code></li></ul></p>
       </p>
       </dd>
-      <dt>How can I test that everything worked?</dt>
+      <dt>我如何检查是否一切正常？</dt>
       <dd>
-      <p>Type in the following URL at your favourite web browser:</p>
-      <p><code>http://localhost/</code> or  <code>http://127.0.0.1/</code> </p>
-      <p>Now you should see the XAMPP start page containing some links to check the status of the installed software and some small programming examples.</p>
+      <p>在你喜欢的浏览器中输入下面的链接：</p>
+      <p><code>http://localhost/</code> 或  <code>http://127.0.0.1/</code> </p>
+      <p>You should see the XAMPP start page, as shown below.</p>
         <img src="/dashboard/images/screenshots/xampp-windows-start.jpg" />
       </dd>
-      <dt>How can I install a server as a service?</dt>
+      <dt>我如何将一个服务器安装成为服务？</dt>
       <dd>
-      <p>Each server in XAMPP you can install also as Windows service. You can also install it from the XAMPP Control Panel. In this case it is necessary to run the scripts or the Control Panel with Administrator privileges.</p>
-      <p>Apache service install: \xampp\apache\apache_installservice.bat</p>
-      <p>Apache service uninstall: \xampp\apache\apache_uninstallservice.bat </p>
-      <p>MySQL service install: \xampp\mysql\mysql_installservice.bat </p>
-      <p>MySQL service uninstall: \xampp\mysql\mysql_uninstallservice.bat </p>
-      <p>FileZilla service (un)install: \xampp\filezilla_setup.bat </p>
-      <p>Mercury: No service installation available</p>
+      <p>你可以将XAMPP中的每一个服务器安装成为Windows服务。你也可以从XAMPP控制面板里面安装它。在这种情况下必须通过管理员权限运行控制面板或脚本。</p>
+      <p>安装Apache服务：\\xampp\\apache\\apache_installservice.bat</p>
+      <p>卸载Apache服务：\\xampp\\apache\\apache_uninstallservice.bat </p>
+      <p>安装MySQL服务: \\xampp\\mysql\\mysql_installservice.bat </p>
+      <p>卸载MySQL服务: \\xampp\\mysql\\mysql_uninstallservice.bat </p>
+      <p>安装/卸载FileZilla服务: \\xampp\\filezilla_setup.bat </p>
+      <p>Mercury: 没有服务可供安装</p>
       </dd>
-      <dt>Is XAMPP production ready?</dt>
+      <dt>XAMPP准备好了吗？</dt>
       <dd>
-      <p>XAMPP is not meant for production use but only for development environments. The way XAMPP is configured is to be open as possible to allow the developer anything he/she wants. For development environments this is great but in a production environment it could be fatal.</p>
-      <p>Here a list of missing security in XAMPP:</p>
+      <p>XAMPP是一个非常优秀而又实用的开发测试环境，XAMPP的配置是开放的，允许开发者任意去修改或配置适合您的开发环境。XAMPP并非商业运行环境，用于商业运作将是一个致命的环境！</p>
+      <p>如下是XAMPP不安全的配置：</p>
       <ol>
-        <li>The MySQL administrator (root) has no password.</li>
-        <li>The MySQL daemon is accessible via network.</li>
+        <li>MySQL数据库管理帐号 (root)没设置密码。</li>
+        <li>MySQL数据库可以通过网络打开。</li>
         <li>ProFTPD uses the password "lampp" for user "daemon".</li>
-        <li>PhpMyAdmin is accessible via network.</li>
-        <li>The XAMPP demopage is accessible via network.</li>
-        <li>The default users of Mercury and FileZilla are known.</li>
+        <li>Mercury和FileZilla的默认用户是已知的。</li>
       </ol>
-      <p>All points can be a huge security risk. Especially if XAMPP is accessible via network and people outside your LAN. It can also help to use a firewall or a (NAT) router. In case of a router or firewall, your PC is normally not accessible via network. It is up to you to fix these problems. As a small help there is the "XAMPP Security console".</p>
-      <p>Please secure XAMPP before publishing anything online. A firewall or an external router are only sufficient for low levels of security. For slightly more security, you can run the "XAMPP Security console" and assign passwords.</p>
-      <p>If you want have your XAMPP accessible from the internet, you should go to the following URI which can fix some problems:</p>
+      <p>所有的点都可能成为一个巨大的安全隐患。尤其是如果XAMPP是可以通过网络或你的局域网外的人访问的话。使用防火墙或一个（带NAT的）路由器也是有帮助的。在有路由器或者防火墙的情况下，你的电脑正常情况下是无法从外部互联网访问的。是否修复这些问题要取决于你。XAMPP安全控制台可以提供一点小的帮助。</p>
+      <p>请在发布任何东西到网上之前做好XAMPP的安全。一个防火墙或者一个外部路由器只能让你达到一个比较低的安全水平。需要高一点的安全的话，你可以运行下XAMPP安全控制台并设置密码。</p>
+      <p>如果你想要让你的XAMPP通过互联网访问的话，你需要访问下述网站来修复一些问题：</p>
       <p><code> http://localhost/security/</code></p>
-      <p>With the security console you can set a password for the MySQL user "root" and phpMyAdmin. You can also enable a authentication for the XAMPP demopages.</p>
-      <p>This web based tool does not fix any additional security issues! Especially the FileZilla FTP server and the Mercury mail server you must secure yourself.</p></dd>
-      <dt>How do I uninstall XAMPP?</dt>
+      <p>借助安全控制台，您可以设置MySQL的“root”用户和phpMyAdmin的密码。您还可以给XAMPP的演示页启用一个认证。</p>
+      <p>这个基于网络的工具不能修复任何附加的安全问题！尤其是FileZilla FTP服务器和Mercury邮件服务器，你必须自行保护它们。</p></dd>
+      <dt>如何卸载XAMPP？</dt>
       <dd>
-      <p>If you installed XAMPP using the installer version, please use the Uninstaller. The Uninstaller will delete all XAMPP entries from your registry and it will uninstall some installed services included with XAMPP. We highly recommend that you use the Uninstall program for removing XAMPP installations from the Installer version.Please backup all the data you want to keep before uninstalling XAMPP.</p>
-      <p>If you installed XAMPP using the ZIP and 7zip versions, shut down all XAMPP servers and exit all panels. If you installed any services, uninstall and shut them down too. Now simply delete the entire folder where XAMPP is installed. There are no registry entries and no environment variables to  clean up.</p>
+      <p>如果你使用安装包版本安装了XAMPP，请使用卸载工具卸载。卸载工具会删除掉所有的XAMPP的文件并会卸载掉已经安装的服务，包括XAMPP自身。我们强烈推荐你使用卸载程序移除XAMPP的安装。请在卸载之前备份你所有想保留的文件。</p>
+      <p>如果你使用zip或者7zip版本安装了XAMPP，请关掉所有的XAMPP服务器并退出控制面板。如果你安装了服务，也需要卸载并关闭他们。现在只需要简单的把XAMPP所在文件夹一删就完事了，不会再有需要清理的任何注册表项或者环境变量啦。</p>
       </dd>
-      <dt>What is the "lite" version of XAMPP?</dt>
+      <dt>XAMPP的“lite”版本是什么玩意？</dt>
       <dd>
-      <p>XAMPP Lite (means "light" as in "light-weight") is a smaller bundle of XAMPP components, which is recommended for quick work using only PHP and MySQL. Some servers or tools such as Mercury Mail and FileZilla FTP are missing in the Lite version.</p>
+      <p>XAMPP Lite（意思是“轻的”或者“轻量级的”）是一个更小的XAMPP的组件合集，推荐用来做一些只需要PHP和MySQL的快速的工作。像Mercury邮件或者是FileZilla的FTP服务器在这个版本里都是没有的。</p>
       </dd>
-      <dt>Where should I place my web content?</dt>
+      <dt>我应该把我的web内容放在哪里呢？</dt>
       <dd>
-      <p>The main directory for all WWW documents is \xampp\htdocs. If you put a file "test.html" in this directory, you can access it with the URI "http://localhost/test.html".</p>
-      <p>And "test.php"? Just use "http://localhost/test.php". A simple testscript can be:</p>
+      <p>所有www文档的根目录都是\\xampp\\htdocs。如果你在目录里放一个文件“test.html”，你可以通过这个URL访问它：http://localhost/test.html。</p>
+      <p>至于"test.php"呢？用"http://localhost/test.php"就可以啦。一个简单的测试脚本可以这么写：</p>
       <p><code>&lt;?php<br />
         echo 'Hello world'; <br />
         ?&gt;</code></p>
-      <p>A new subdirectory for your web? Just make a new directory (e.g. "new") inside the directory "\xampp\htdocs" (best without whitespaces and only ASCII), create a test file in this directory and access it with "http://localhost/new/test.php".</p>
-      <p><strong>Further specifics</strong></p>
+      <p>想给你的web服务器设一个新的子目录？只需要在目录\\xampp\\htdocs新建个文件夹就行了（最好不要空格并且只使用英文字母和数字），并且建一个测试文件然后访问它，例如http://localhost/new/test.php。</p>
+      <p><strong>更多细节</strong></p>
       <p>HTML:<br>
-      Executable: \xampp\htdocs<br>
-      Allowed endings: .html .htm<br>
-      => basic package</p>
+      可执行的： \xampp\htdocs<br>
+      允许的结尾： .html .htm<br>
+      => 基本的包</p>
       <p>SSI:<br>
-      Executable: \xampp\htdocs<br>
-      Allowed endings: .shtml<br>
-      => basic package</p>
+      可执行的： \xampp\htdocs<br>
+      允许的结尾： .shtml<br>
+      => 基本的包</p>
       <p>CGI:<br>
-      Executable: \xampp\htdocs and \xampp\cgi-bin<br>
-      Allowed endings: .cgi<br>
-      => basic package</p>
+      可执行的： \xampp\htdocs and \xampp\cgi-bin<br>
+      允许的结尾： .cgi<br>
+      => 基本的包</p>
       <p>PHP:<br>
-      Executable: \xampp\htdocs and \xampp\cgi-bin<br>
-      Allowed endings: .php<br>
-      => basic package</p>
+      可执行的： \xampp\htdocs and \xampp\cgi-bin<br>
+      允许的结尾： .php<br>
+      => 基本的包</p>
       <p>Perl:<br>
-      Executable: \xampp\htdocs and \xampp\cgi-bin<br>
-      Allowed endings: .pl<br>
-      => basic package</p>
+      可执行的： \xampp\htdocs and \xampp\cgi-bin<br>
+      允许的结尾： .pl<br>
+      => 基本的包</p>
       <p>Apache::ASP Perl:<br>
-      Executable: \xampp\htdocs<br>
-      Allowed endings: .asp<br>
-      => basic package</p>
+      可执行的： \xampp\htdocs<br>
+      允许的结尾： .asp<br>
+      => 基本的包</p>
       <p>JSP Java:<br>
-      Executable: \xampp\tomcat\webapps\java (e.g.)<br>
-      Allowed endings: .jsp<br>
+      可执行的： \xampp\tomcat\webapps\java (e.g.)<br>
+      允许的结尾： .jsp<br>
       => Tomcat add-on</p>
       <p>Servlets Java:<br>
-      Executable: \xampp\tomcat\webapps\java (e.g.)<br>
-      Allowed endings: .html (u.a)<br>
+      可执行的： \xampp\tomcat\webapps\java (e.g.)<br>
+      允许的结尾： .html (u.a)<br>
       => Tomcat add-on</p>
       </dd>
-      <dt>Can I move the XAMPP installation?</dt>
+      <dt>我可以移动XAMPP安装文件么？</dt>
       <dd>
-      <p>Yes. After moving of the XAMPP directory, you must execute "setup_xampp.bat". The paths in the configuration files will be adjusted with this step.</p>
-      <p>If you have installed any server as Windows service, you must first remove the Windows service, and after the moving you can install the service again.</p>
-      <p>Warning: The configuration files from your own scripts, like PHP applications, are not adjusted. But it's possible to write a "plug-in" for the installer. With such a plug-in, the installer can adjust such files too.</p>
+      <p>是的，当移动XAMPP文件目录之后，你必须执行一下"setup_xampp.bat"。在配置文件里的路径会在这一步之后被改变。</p>
+      <p>如果你已经将任意一个服务器安装成了Windows服务，你必须先移除服务，移动之后你可以重新安装服务。</p>
+      <p>警告：你自己的脚本的配置文件，例如你的PHP应用，是不会被调整的。但是你可以为安装工具写一个插件，借助这样一个插件，安装工具就也可以同时调整这些文件了。</p>
       </dd>
-      <dt>What are "Automatic start pages" for the WWW directories?</dt>
+      <dt>访问WWW目录的时候指向的“默认起始页”的名称是什么呢？</dt>
       <dd>
-      <p>The standard filename for the Apache function "DirectoryIndex" is "index.html" or "index.php". Every time you are just browsing to a folder (e.g. "http://localhost/xampp/"), and Apache can find such a file, Apache is displaying this file instead of a directory listing.</p>
+      <p>Apache的"DirectoryIndex"（目录起始页）功能的预设文件名是“index.html”或者“index.php”。每次当你访问一个文件夹的时候（例如http://localhost/xampp/），Apache会先找一下指定名称的文件，并且找的话会默认显示那个文件而不会再显示目录的文件列表啦。</p>
       </dd>
-      <dt>Where can I change the configuration?</dt>
+      <dt>我可以在哪儿修改配置呢？</dt>
       <dd>
-      <p>Almost all settings in XAMPP you can change with configuration files. Just open the file in a textedit and change the setting you want. Only FileZilla and Mercury should be configured with the application config tool.</p>
+      <p>XAMPP几乎所有的设置都可以在配置文件里修改。只需要在文本编辑器里打开文件然后就可以按你的需要修改设置了。只有Filezilla和Mercury需要使用应用配置工具里自定义设置。</p>
       </dd>
 
-      <dt>Why can't XAMPP work on Windows XP SP2?</dt>
+      <dt>为啥XAMPP不能在Windows XP SP2下工作呢？</dt>
       <dd>
-      <p>Microsoft delivers a better firewall with service pack 2 (SP2), which starts automatically. This firewall now blocks the necessary ports 80 (http) and 443 (https) and Apache can't start.</p>
-      <p><strong>The fast solution:</strong></p>
-      <p>Disable the Microsoft firewall with the toolbar and try to start XAMPP onces more. The better solution is to define an exception within the security center.</p>
-      <p><strong>The following ports are used for basic functionality:</strong></p>
+      <p>微软在service pack 2 (SP2)里面提供了一个更加高大上的会自动启动的防火墙，这个防火墙会拦截掉Apache必需的80和443端口，然后Apache就启动不了了。</p>
+      <p><strong>最快的解决方案：</strong></p>
+      <p>把微软那个防火墙给它关了，然后再启动一下XAMPP试试。更好的解决办法是在安全中心里面给XAMPP定义一个例外。</p>
+      <p><strong>下述端口是提供给基本功能用的：</strong></p>
       <p>Apache (HTTP): Port 80<br/>
         Apache (WebDAV): Port 81</br>
         Apache (HTTPS): Port 443</br>
@@ -248,153 +250,198 @@
         Tomcat (HTTP): Port 8080</p>
       </dd>
 
-      <dt>Why doesn't XAMPP work on Vista?</dt>
+      <dt>为什么XAMPP不能在Vista上工作？</dt>
       <dd>
-      <p><strong>User Account Control (UAC)</strong></p>
-      <p>In the directory "C:\program files" you don't have full write privileges, even as Admin. Or you have only limited privileges (e.g. for ".\xampp\htdocs"). In this case you can't edit a file.</br>
-<strong>Solution:</strong> Raise your privileges within explorer (right click / security) or disable the user account control (UAC).</p>
-      <p>You have installed Apache/MySQL in "C:\xampp" as Windows service. But you can't start/stop the services with the "XAMPP Control Panel" or can't uninstall them.</br></br>
-<strong>Solution:</strong> Use the service management console from Windows or disable UAC.</p>
-      <p><strong>Disabling the User Account Control (UAC)</strong></p>
-      <p>To disable the UAC, use the program "msconfig". In "msconfig" go to "Tools", select "disable user account control" and verify your selection. Now you must restart Windows. At the same time, you can enable the UAC again.</p>
+      <p><strong>用户帐户控制（UAC）</strong></p>
+      <p>在目录"C:\\program files"当中你是没有完整的写权限的，即便管理员也不行。或者你就只有有限的权限（例如".\\xampp\\htdocs"）了。在这种情况下你就不能编辑文件了。</br>
+<strong>解决方案：</strong> 通过浏览器（右键-安全）来提高你的权限或者禁用用户帐户控制（UAC）</p>
+      <p>你已经在"C:\\xampp"将Apache/MySQL安装成Windows服务但你不能通过"XAMPP控制面板"启动/停止这些服务或者不能卸载它们。</br></br>
+<strong>解决方案：</strong> 从Windows使用服务管理控制台或禁用UAC。</p>
+      <p><strong>禁用用户帐户控制（UAC）</strong></p>
+      <p>为了禁用UAC，你需要使用程序“msconfig”。在msconfig当中找到“工具”，选择“禁用用户账户控制”然后保存你的更改。现在你必须重启一下电脑。同时你也可以再次启动UAC。</p>
       </dd>
 
-      <dt>How do I check the md5 checksum?</dt>
+      <dt>我如何检查md5校验值呢？</dt>
       <dd>
-      <p>To compare files, often checksums are used. A standard to create this checksum md5 (Message Digest Algorithm 5).</p>
-      <p>With this md5 checksum you can test, if your download of the XAMPP package is correct or not. Of course you need a program which can create these checksums. For Windows you can use a tool from Microsoft:</p>
-      <p><a href="http://support.microsoft.com/kb/841290">Availability and description of the File Checksum Integrity Verifier utility</a></p>
-      <p>It's also possible to use any other program which can create md5 checksums, like the GNU md5sum.</p>
-      <p>As you have installed such a program (e.g. fciv.exe), you can do following steps:</p>
+      <p>想要比较文件，通常使用的办法是计算校验值。md5（消息摘要算法5）就是其中的一个生成校验值的标准。</p>
+      <p>使用这个md5校验值你可以检查出来你下载的XAMPP包是不是完好的。当然你需要有一个工具来生成这个校验值。Windows用户可以使用微软的一个工具：</p>
+      <p><a href="http://support.microsoft.com/kb/841290">可用性和文件校验和完整性验证程序的描述</a></p>
+      <p>也可以使用其他能够生成md5的程序，例如GNU md5sum。</p>
+      <p>安装好这样的一个程序（例如fciv.exe）之后，你可以完成如下的步骤：</p>
       <p>
         <ul>
-          <li>Download XAMPP (f.e. xampp-win32-1.8.2-0.exe)</li>
-          <li>Create the checksum with:</br>
+          <li>下载XAMPP（例如xampp-win32-1.8.2-0.exe）</li>
+          <li>用于生成校验值的：</br>
             <code>fciv.exe xampp-win32-1.8.2-0.exe</code>
           </li>
-          <li>And now you can compare this checksum with that one you can find on the XAMPP for Windows homepage.</li>
+          <li>然后你就可以用你的校验值和在XAMPP主页找到的校验值进行比较了。</li>
         </ul>
       </p>
-      <p>If both checksums equal, all is ok. If not, the download is broken or the file has been changed.</p>
+      <p>如果两个校验值是一样的，就是好的。否则，要么下载文件损坏了要么是文件被修改过。</p>
       </dd>
 
-      <dt>Why have changes in my php.ini not taken effect?</dt>
+      <dt>为啥我在php.ini里做的修改没有生效?</dt>
       <dd>
-      <p>If a change in the "php.ini" has no effect, it's possible PHP is using a different one. You can verify this with phpinfo(). Go to the URI  http://localhost/xampp/phpinfo.php and search for "Loaded Configuration File". This value shows you the "php.ini" PHP is really using.</p>
-      <p><strong>Note:</strong> After changing the "php.ini" you have to restart Apache so that Apache/PHP can read the new settings.</p>
+      <p>如果在"php.ini"里做的修改没有生效，很可能是因为PHP用的是另外一个。你可以通过phpinfo()来检查这一点。访问这个网址 http://localhost/xampp/phpinfo.php 并找到Loaded Configuration File。这个值会告诉你PHP实际使用的php.ini。</p>
+      <p><strong>注意：</strong> 在修改php.ini之后你必须重启Apache这样Apache/PHP才能够读取设置。</p>
       </dd>
 
-      <dt>Help! There is a virus in XAMPP!</dt>
+      <dt>卧槽！XAMPP里头有病毒！</dt>
       <dd>
-      <p>Some antivirus programs mistake XAMPP for a virus, typically flagging the file xampp-manager.exe This is a false positive meaning that the antivirus erroneously identified it as a virus, when it is not. Before we release each new version of XAMPP we run it through virus scanning software. At the moment we are using <a href="http://www.kaspersky.com/virusscanner">Kapersky Online Virus Scanner</a>. You can also use the online tool <a href="https://www.virustotal.com/">Virus Total</a> for scanning XAMPP or send us an email to security (at) apachefriends (dot) org if you find any issue.</p>
+      <p>有些杀软会误报你懂的。通常他们会把xampp-manager.exe这个文件当成病毒。误报的意思就是本来不是病毒的东西被杀软错误的看做了病毒。我们每次发布新版XAMPP的时候都会用杀软扫一遍的。我们目前使用的是 <a href="http://www.kaspersky.com/virusscanner">Kapersky Online Virus Scanner</a>. You can also use the online tool <a href="https://www.virustotal.com/">Virus Total</a> for scanning XAMPP or send us an email to security (at) apachefriends (dot) org if you find any issue.</p>
       </dd>
 
-      <dt>How do I configure my antivirus application?</dt>
+      <dt>我如何配置我的杀软？</dt>
       <dd>
-      <p>We have included all dependences and servers required for running the bundled web application, so you will find that XAMPP installs large numbers of files. If you are installing a XAMPP application on a Windows machine with an antivirus app enabled, this may slow down the installation significantly, and there is also a chance that one of the servers (web server, database server) may be blocked by the antivirus software. If you have an antivirus tool enabled, check the following settings for running XAMPP without performance issues:</p>
+      <p>我们已经添加好了所有运行这个打包好的web应用所需的必要组件和服务器软件，所以你会发现XAMPP会安装一大堆文件。如果你在一个开着杀软的Windows的机器上安装XAMPP应用，可能会明显的拖缓安装进程的速度，而且还可能会有服务器（如web服务器，数据库服务器）被杀软阻塞了。如果你有开着的杀软，请检查下列可以保证运行XAMPP而不造成性能问题的设置：</p>
       <p>
         <ul>
-          <li>Add exceptions in the firewall: for Apache, MySQL or any other server.</li>
-          <li>Scan files when executing: If you have enabled the antivirus scan for all files, the executable files for the servers may slow down.</li>
-          <li>Scan the traffic for different URLs: If you are developing with XAMPP on your own machine, you can exclude "localhost" traffic in the Antivirus settings.</li>
+          <li>给防火墙添加例外：针对Apache，MySQL或者其他任何的服务器。</li>
+          <li>执行的时候扫描文件：如果你对所有文件都启动了杀软的扫描功能，服务器的可执行文件可能会被拖慢。</li>
+          <li>扫描不同网址的流量：如果你在自己的机器上用XAMPP做开发，你可以在杀软的设置里排除掉localhost的流量监测。</li>
         </ul>
       </p>
       </dd>
 
-      <dt>Why doesn't the Apache server start on my system?</dt>
+      <dt>为什么Apache服务器在我的系统上启动不了呢？</dt>
       <dd>
-      <p>This problem can be one of several reasons:</p>
+      <p>这个问题可能是由这几种原因之一造成的：</p>
       <p>
         <ul>
-          <li>You have started more then one HTTP Server (IIS, Sambar, ZEUS and so on). Only one Server can use port 80. This error message indicate the problem:<br/>
+          <li>你开启了不止一个HTTP的服务器(IIS, Sambar, ZEUS以及别的什么)。只有一个服务器可以占用80端口。这个错误消息指出了这个问题：<br/>
 <code>(OS 10048)... make_sock: could not bind to adress 0.0.0.0:80
 no listening sockets available, shutting down</code></li>
-          <li>You have other software, such as the Internet Telephone "Skype" which also blocks the port 80. If the problem is "Skype", you can go in Skype to Actions --> Options --> Connection --> remove the check mark at "use port 80 for an alternate port" and restart Skype. Now it should work.</li>
-          <li>You have a firewall which blocks the Apache port. Not all firewalls are compatible with Apache, and sometimes deactivating the firewall is not enough and you must deinstall it. This error message indicates a firewall:<br/>
+          <li>你有其他的软件，例如也会阻断80端口的互联网电话软件“skype”。如果问题来源于skype，你可以进入skype找到操作 - >选项 - >连接 - >取消勾选“使用端口80作为备用端口”，然后重新启动Skype。现在应该可以正常工作了。</li>
+          <li>你有一个阻断了Apache端口的防火墙。不是所有的防火墙都兼容Apache，而有的时候禁用防火墙是不够的，还得卸载掉它才行。这个错误信息是指向防火墙的：<br/>
 <code>(OS 10038)Socket operation on non-socket: make_sock: for address 0.0.0.0:80,
 apr_socket_opt_set: (SO_KEEPALIVE)</code></li>
         </ul>
-        <p>Also if Apache can start, but your browser can't connect to it it could be due to one of the following:</p>
+        <p>此外，如果Apache可以启动，但您的浏览器无法连接到它可能是由于以下原因之一：</p>
         <ul>
-          <li>Some virus scanners can cause this in the same way that firewalls can interfere.</li>
-          <li>You have XP Professional without service pack 1. You must have at least SP1 for XAMPP.</li>
+          <li>有些病毒扫描程序可能会像防火墙一样产生干扰并导致这个问题。</li>
+          <li>你的XP Professional没有安装sp1。你必须至少安装一个SP1才能用XAMPP。</li>
         </ul>
       </p>
-      <p><strong>Tip:</strong> If you have problems with used ports, you can try the tool "xampp-portcheck.exe". Maybe it can help.</p>
+      <p><strong>提示：</strong> If you have problems with used ports, you can try the tool "xampp-portcheck.exe". Maybe it can help.</p>
       </dd>
 
-      <dt>Why is my CPU load for Apache almost 99%?</dt>
+      <dt>为什么我的Apache占用的CPU负载接近99%呢？</dt>
       <dd>
-      <p>There is one of two scenarios at play here. Either your CPU is maxing out, or you can browser connect to the server, but not see anything (the system is trying unsucessfully to load the page). In either case you can find the following message in the Apache log file:</p>
+      <p>有两种情况，要么是你的CPU确实达到上限了，要么你的浏览器能够连接到服务器但是啥也看不到（系统尝试加载页面但是失败了），不管是哪种情况你都可以在Apache的log文件里面找到下述信息：</p>
       <p><code>Child: Encountered too many AcceptEx faults accepting client connections.
 winnt_mpm: falling back to 'AcceptFilter none'.</code></p>
-      <p>The MPM falls back to a safer implementation, but some client requests were not processed correctly. In order to avoid this error, use "AcceptFilter" with accept filter "none" in the "\xampp\apache\conf\extra\httpd-mpm.conf" file.</p>
+      <p>多道处理模块（MPM）回归到一个更加安全的执行模式，从而导致一些客户端的请求没有没有正确的执行。为了避免这样的错误，可以在"\\xampp\\apache\\conf\\extra\\httpd-mpm.conf"文件当中将可接受的过滤器"AcceptFilter"置为"none"。</p>
       </dd>
 
-      <dt>Why are pictures and style-sheets not displayed?</dt>
+      <dt>为什么图片和样式表显示不出来？</dt>
       <dd>
-      <p>Sometimes there are problems with displaying pictures and style-sheets. Especially if these files are located on a network drive. In this case you can enable (or add) one if the following lines in the file "\xampp\apache\conf\httpd.conf":</p>
+      <p>有时候显示图片和样式表会有问题，特别是如果这些文件位于网络驱动器上的时候。在这种情况下，您可以启用（或增加）一行，如果文件"\\xampp\\apache\\conf\\httpd.conf"中的以下行:</p>
       <p><code>EnableSendfile off</br>
 EnableMMAP off</code></p>
-      <p>This problem can also be caused by programs for regulating bandwidth, like NetLimiter.</p>
+      <p>这个问题也可能是由带宽调整软件，例如NetLimiter导致的。</p>
       </dd>
 
-      <dt>How can I set a root password in MySQL?</dt>
+      <dt>我如何在MySQL里面设置一个root的密码？</dt>
       <dd>
-      <p>The easiest way is to use the security console, which you can access at http://localhost/security/ This console creates a password for the MySQL user root and adjusts the phpMyAdmin configuration.</p>
-      <p>Another approach is to configure it with the "XAMPP Shell" (command prompt). Open the shell and execute this command:<code>mysqladmin.exe -u root password secret</code></p>
+      <p>Configure it with the "XAMPP Shell" (command prompt). Open the shell from the XAMPP control pane and execute this command:<code>mysqladmin.exe -u root password secret</code>This sets the root password to 'secret'.</p>
       </dd>
 
-      <dt>Can I use my own MySQL server?</dt>
+      <dt>我可以使用自己的MySQL服务器么？</dt>
       <dd>
-      <p>Yes. Simply don't start the MySQL from the XAMPP package. Please note that two servers cannot be started on the same port. If you have set a password for "root", please do not forget to edit the file "\xampp\phpMyAdmin\config.inc.php".</p>
+      <p>可以的，只是不要启动XAMPP包里的MySQL就够了。请注意两个服务器不能在同一个端口上同时启动如果你已经设置了一个root的密码，请不要忘记修改这个文件：\\xampp\\phpMyAdmin\\config.inc.php。</p>
       </dd>
 
-      <dt>How do I restrict access to phpMyAdmin from the outside?</dt>
+      <dt>我如何限制phpMyAdmin的外部访问呢？</dt>
       <dd>
-      <p>In the basic configuration of XAMPP, phpMyAdmin have public access.</p>
-      <p>You can change the MySQL root password and choose the authentication method for phpMyAdmin from the security console at http://localhost/security/</p>
-      <p>Before you can access the MySQL server, phpMyAdmin will prompt you for a user name and password. Don't forget to set a password for the user "root" first.</p>
+      <p>In the basic configuration of XAMPP, phpMyAdmin is accessible only from the same host that XAMPP is running on, at http://127.0.0.1 or http://localhost.</p>
+      <p>当你能访问MySQL服务器之前，phpMyAdmin会提示你输入用户名和密码。不要忘记先给用户"root"设个密码哦。</p>
       </dd>
 
-      <dt>Where is the IMAP support for PHP?</dt>
+      <dt>How do I enable access to phpMyAdmin from the outside?</dt>
       <dd>
-      <p>As default, the IMAP support for PHP is deactivated in XAMPP due to some mysterious initialization errors with some home versions like Windows 98. If you work with NT systems, you can open the file "\xampp\php\php.ini" to activate the php exstension by removing the beginning semicolon at the line ";extension=php_imap.dll". It should be:</br>
+      <p>In the basic configuration of XAMPP, phpMyAdmin is accessible only from the same host that XAMPP is running on, at http://127.0.0.1 or http://localhost.</p>
+      <p>IMPORTANT: Enabling external access for phpMyAdmin in production environments is a significant security risk. You are strongly advised to only allow access from localhost. A remote attacker could take advantage of any existing vulnerability for executing code or for modifying your data.</p>
+      <p>To enable remote access to phpMyAdmin, follow these steps:</p>
+      <ul>
+        <li>Edit the apache\conf\extra\httpd-xampp.conf file in your XAMPP installation directory.</li>
+        <li>Within this file, find the lines below. 
+          <p><code>
+              Alias /phpmyadmin "C:/xampp/phpMyAdmin/"
+              &lt;Directory "C:/xampp/phpMyAdmin"&gt;
+                AllowOverride AuthConfig
+                Require local
+          </code></p>
+        </li>
+        <li>Then replace 'Require local' with 'Require all granted'.</li>
+          <p><code>
+              Alias /phpmyadmin "C:/xampp/phpMyAdmin/"
+              &lt;Directory "C:/xampp/phpMyAdmin"&gt;
+                AllowOverride AuthConfig
+                Require all granted
+          </code></p>
+        <li>Restart the Apache server using the XAMPP control panel.</li>
+      </ul>
+      </dd>
+      
+      <dt>PHP的IMAP支持在哪儿呢？</dt>
+      <dd>
+      <p>默认的话，在XAMPP里面PHP对IMAP的支持是被停用的，因为对于某些家用的系统版本比如Windows 98会出现一些诡异的初始化错误。如果你用的是Windows NT系统的话，你可以打开文件"\\xampp\\php\\php.ini"并去掉";extension=php_imap.dll"这一行前面的分号来激活这个PHP扩展。它应该是这样的：</br>
 <code>extension=php_imap.dll</code></p>
-      <p>Now restart Apache and IMAP should work. You can use the same steps for every extension, which is not enabled in the default configuration.</p>
+      <p>现在重启一下Apache然后IMAP就好使啦。你可以使用同样的步骤来操作任何一个在默认配置里没有激活的扩展。</p>
       </dd>
 
-      <dt>Why don't some PHP open source apps work with XAMPP on Windows?</dt>
+      <dt>为什么一些PHP开源应用不能在Windows版的XAMPP工作呢？</dt>
       <dd>
-      <p>A lot of PHP applications or extensions that have been written for Linux haven’t been ported to Windows. </p>
+      <p>许多PHP应用或者扩展都是为linux写的，还没有被移植到Windows。 </p>
       </dd>
 
       <dt>Can I delete the "install" directory after installation?</dt>
       <dd>
-      <p>It's better not to. The scripts here are still needed for all additional packages (add-ons) and upgrades of XAMPP.</p>
+      <p>最好不要这样。所有的附加组件和XAMPP的升级仍然是需要使用这个脚本的。</p>
       </dd>
 
-      <dt>How do I activate the eaccelerator?</dt>
+      <dt>我如何激活eaccelerator？</dt>
       <dd>
-      <p>Like other (Zend) extensions, you can activate it in "php.ini". In this file, enable the line ";zend_extension = "\xampp\php\ext\php_eaccelerator.dll"". It should be:</br>
+      <p>就像很多(Zend)扩展一样，你可以在"php.ini"里激活它。在这个文件里，启用这一行";zend_extension = "\\xampp\\php\\ext\\php_eaccelerator.dll""。它应该是这样子的：</br>
 <code>zend_extension = "\xampp\php\ext\php_eaccelerator.dll"</code></p>
       </dd>
 
-      <dt>How do I fix a connection error to my MS SQL server?</dt>
+      <dt>我如何修复我的MS SQL服务器的连接错误？</dt>
       <dd>
-      <p>If the mssql extension was loaded in the php.ini, sometimes problems appear when only TCP/IP is used. You can fix that problem with a newer "ntwdblib.dll" from Microsoft. Please replace the older file in "\xampp\apache\bin" and "\xampp\php" with the new one. Because of the license, we can't package a newer version of this file with XAMPP.</p>
+      <p>如果mssql扩展加载到了php.ini，有时候当只有TCP/IP使用的时候会出问题。你可以从微软获取一个新的“ntwdblib.dll”来修复这个问题。请用新的替换掉位于"\\xampp\\apache\\bin"和"\\xampp\\php"的旧的文件。因为许可证问题，我们不能把这个文件的更新版本打包进XAMPP。</p>
       </dd>
 
-      <dt>How do I work with the PHP mcrypt extension?</dt>
+      <dt>我如何使用PHP mcrypt扩展？</dt>
       <dd>
-      <p>For this, we have opened a topic in the forum with examples and possible solutions: <a href="https://community.apachefriends.org/f/viewtopic.php?t=3012">MCrypt topic</a></p>
+      <p>为了这个，我们已经在社区里开了一个话题，关于例子和有效的解决方案：<a href="https://community.apachefriends.org/f/viewtopic.php?t=3012">MCrypt主题</a></p>
       </dd>
 
-      <dt>Do Microsoft Activer Server Pages (ASP) work with XAMPP?</dt>
+      <dt>Do Microsoft Active Server Pages (ASP) work with XAMPP?</dt>
       <dd>
-      <p>No. And Apache::ASP with the Perl Add-On is not the same. Apache::ASP only knows Perl-Script, but ASP from the Internet Information Server (IIS) also knows the normal VBScript. But for ASP .NET, there is a 3rd party Apache module available.</p>
+      <p>不行。那个和带有Perl的Apache::ASP附加组件是不一样的。Apache::ASP只能运行Perl脚本，但是IIS上的ASP文件还会有正常的VBScript。不过对于ASP .NET，有一个第三方的Apache扩展模块可以使用。</p>
       </dd>
 
+      <dt>How can I get XAMPP working on port 80 under Windows 10?</dt>
+      <dd>
+      <p>By default, Windows 10 starts Microsoft IIS on port 80, which is the same default port used by Apache in XAMPP. As a result, Apache cannot bind to port 80.</p>
+      <p>To disable IIS from running on port 80, follow these steps:</p>
+      <ul>
+        <li>Open the Services panel in Computer Management.</li>
+        <li>Search for the 'World Wide Web Publishing Service' and select it.</li>
+        <li>Click the link to 'Stop the service'.</li>
+        <li>Double-click the service name.</li>
+        <li>In the 'Startup type' field, change the startup type to 'Disabled'.</li>
+        <li>Click 'OK' to save your changes.</li>
+      </ul>
+      <p>You should now be able to start Apache in XAMPP on port 80.</p>
+      <p>For more information, refer to the 'Troubleshoot Apache Startup Problems' guide included with XAMPP or <a href='https://community.apachefriends.org/f/viewtopic.php?f=16&t=71620'>this forum post</a>.</p>
+      </dd>
+      
+      <dt>How can I use Microsoft Edge to access local addresses under Windows 10?</dt>
+      <dd>
+      <p>If your local machine has the host name 'myhost', you will not be able to access URLs such as http://myhost in Microsoft Edge. To resolve this, you should instead use the addresses http://127.0.0.1 or http://localhost.</p>
+      </dd>
+      
       </dd>
       </dd>
     </dl>
@@ -424,7 +471,7 @@ EnableMMAP off</code></p>
               </ul>
             </div>
             <div class="large-4 columns">
-              <p class="text-right">版权所有(c) 2015, Apache Friends</p>
+              <p class="text-right">版权所有(c) 2017, Apache Friends</p>
             </div>
           </div>
         </div>

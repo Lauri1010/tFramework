@@ -1,0 +1,1 @@
+!function(n){n("body").on("submit","form",function(o){if(o.preventDefault(),console.log("fPath name in fRun "+window.fRun.fPathName),window.fRun.fPathName){var t=n(this).serialize();n.ajax({method:"POST",url:window.fRun.fPathName,data:t}).done(function(o){n("#mContainer").html(o)})}}),n.extend({bindEvent:function(o,t,e){n("body").on(o,t,function(){e()})}})}(jQuery);

@@ -63,46 +63,50 @@
       <div class="hero">
   <div class="row">
     <div class="large-12 columns">
-      <h1>Windows <span>Frequently Asked Questions</span></h1>
+      <h1>Windows <span>よくある質問</span></h1>
     </div>
   </div>
 </div>
 <div class="row">
     <div class="large-8 columns">
     <dl class="accordion">
-      <dt>How do I install XAMPP?</dt>
+      <dt>XAMPP のインストール方法</dt>
       <dd>
-      <p>XAMPP for Windows exists in three different flavors:</p>
-      <p>Installer:<br />
-      Probably the easiest way to install XAMPP.</p>
+      <p>Windows用のXAMPPを導入する手段は3つあります。</p>
+      <p>インストーラを使う方法：<br />
+      おそらく最も簡単な方法です。</p>
       <p>ZIP:<br />
-      For purists: XAMPP as ordinary ZIP archive.</p>
+                        補足：XAMPP は通常、ZIP形式で圧縮されています。                </p>
       <p>7zip:<br />
-      For purists with low bandwidth: XAMPP as 7zip archive.</p>
+      通信環境が悪い場合：XAMPPの7zip形式の圧縮ファイルを使用してください。</p>
       <p>Note: If you extract the files, there can be false-positives virus warnings.</p>
       <p><strong>Using the installer:</strong></p>
       <p></p>
-      <p>The XAMPP control panel for start/stop Apache, MySQL, FileZilla & Mercury or install these server as services.</p>
+      <p>XAMPPのコントロールパネルからApache、MySQL、FileZillaとMercury の開始/停止、サービス利用のためのサーバーインストールが行えます。</p>
       <p><strong>Installing from ZIP</strong></p>
       <p>Unzip the zip archives into the folder of your choice. XAMPP is extracting to the subdirectory "C:\xampp" below the selected target directory. Now start the file "setup_xampp.bat", to adjust the XAMPP configuration to your system.</p>
       <p>If you choose a root directory "C:\" as target, you must not start "setup_xampp.bat".</p>
-      <p>Like with the installer version, you can now use the "XAMPP Control Panel" for additional tasks.</p>
+      <p>インストーラのバージョンと同様に、追加のタスクについては、「 XAMPPコントロールパネル」を使用することができます。</p>
       </dd>
-      <dt>How can I start XAMPP without setup?</dt>
+      <dt>Does XAMPP include MySQL or MariaDB?</dt>
       <dd>
-      <p>If you extract XAMPP in a top level folder like "C:\" or "D:\", you can start most servers like Apache or MySQL directly without execution of the file "setup_xampp.bat".</p>
-      <p>Not using the setup script, or selecting relative paths in the setup script, is preferred if you are installing XAMPP on a usb drive. Because on each pc such a drive can have an other drive letter. You can switch from absolute to relative paths at any time with the setup script.</p>
-      <p>Using the installer from our Downloads page is the easiest way to install XAMPP. After the installation is complete, you will find XAMPP under   Start | Programs | XAMPP. You can use the XAMPP Control Panel to start/stop all server and also install/uninstall services.</p>
-      <p>The XAMPP control panel for start/stop Apache, MySQL, FileZilla & Mercury or install these server as services.</p>
+      <p>Since XAMPP 5.5.30 and 5.6.14, XAMPP ships MariaDB instead of MySQL. The commands and tools are the same for both.</p>
+      </dd>
+      <dt>どうやったらセットアップをすることなくXAMPPを起動することができますか？</dt>
+      <dd>
+      <p>もし上位フォルダ（ "C:\\"や"D:\\"など）にXAMPPを展開する場合は、あなたは直接 setup_xampp.bat ファイルを実行することなくApacheやMySQLのようなほとんどのサーバーを起動することができます。</p>
+      <p>                  USBドライブにXAMPPをインストールしているなら、セットアップスクリプトを使わない、もしくは、セットアップスクリプト内の相対パスを選ばない方が良いです。それぞれのPCのドライブにはそれぞれのドライブ記号があります。セットアップスクリプトを使えばいつでも絶対パスから相対パスに変更することは可能です。                </p>
+      <p>XAMPPをインストールする最も簡単な方法は、私たちのダウンロードページからインストーラを起動することです。インストールが完了したら、 スタート→全てのプログラム→XAMPPの中にXAMPPが格納されます 。あなたはXAMPPコントロールパネルを使用して、全てのサーバーの開始/停止、インストール/アンインストールを行うことができます。</p>
+      <p>XAMPPのコントロールパネルからApache、MySQL、FileZillaとMercury の開始/停止、サービス利用のためのサーバーインストールが行えます。</p>
       </dd>
       <dt>How do I start and stop XAMPP?</dt>
       <dd>
-      <p>The universal control center is the "XAMPP Control Panel" (thanks  www.nat32.com). It is started with:</p>
+      <p>共通のコントロールセンターは、 「 XAMPPコントロールパネル」 （www.nat32.com）です。以下のように開始されます。</p>
       <p><code>\xampp\xampp-control.exe</code></p>
       <p>You can also use some batchfiles to start/stop the servers:</p>
       <p>
       <ul>
-        <li>Apache &amp; MySQL start:
+        <li>Apache &amp：MySQL の開始：
         <code>\xampp\xampp_start.exe</code></li>
         <li>Apache &amp; MySQL stop:
         <code>\xampp\xampp_stop.exe</code></li>
@@ -112,56 +116,54 @@
         <code>\xampp\apache_stop.bat</code></li>
         <li>MySQL start:
         <code>\xampp\mysql_start.bat</code></li>
-        <li>MySQL stop:
+        <li>MySQLの停止：
         <code>\xampp\mysql_stop.bat</code></li>
-        <li>Mercury Mailserver start:
+        <li>Mercury メールサーバーの開始：
         <code>\xampp\mercury_start.bat</code></li>
-        <li>Mercury Mailserver stop:
+        <li>Mercury メールサーバーの停止：
         <code>\xampp\mercury_stop.bat</code></li>
-        <li>FileZilla Server start:
+        <li>FileZilla サーバーの開始：
         <code>\xampp\filezilla_start.bat</code></li>
-        <li>FileZilla Server stop:
+        <li>FileZilla サーバーの停止：
         <code>\xampp\filezilla_stop.bat</code></li></ul></p>
       </p>
       </dd>
-      <dt>How can I test that everything worked?</dt>
+      <dt>どのようにすれば、システムが正常に動いていることを確認できますか？ </dt>
       <dd>
-      <p>Type in the following URL at your favourite web browser:</p>
-      <p><code>http://localhost/</code> or  <code>http://127.0.0.1/</code> </p>
-      <p>Now you should see the XAMPP start page containing some links to check the status of the installed software and some small programming examples.</p>
+      <p>ウェブブラウザで以下のURLにアクセスしてください：</p>
+      <p><code>http://localhost/</code> または  <code>http://127.0.0.1/</code> </p>
+      <p>You should see the XAMPP start page, as shown below.</p>
         <img src="/dashboard/images/screenshots/xampp-windows-start.jpg" />
       </dd>
       <dt>How can I install a server as a service?</dt>
       <dd>
-      <p>Each server in XAMPP you can install also as Windows service. You can also install it from the XAMPP Control Panel. In this case it is necessary to run the scripts or the Control Panel with Administrator privileges.</p>
-      <p>Apache service install: \xampp\apache\apache_installservice.bat</p>
-      <p>Apache service uninstall: \xampp\apache\apache_uninstallservice.bat </p>
+      <p>XAMPP内の各サーバはWindowsサービスとしてもインストールすることができます。また、 XAMPPコントロールパネルからインストールすることができます。この場合には、管理者権限でスクリプトや[コントロールパネル]を実行する必要があります。</p>
+      <p>Apache サービスのインストール：\\xampp\\apache\\apache_installservice.bat</p>
+      <p>Apache サービスのアンインストール：\\xampp\\apache\\apache_uninstallservice.bat </p>
       <p>MySQL service install: \xampp\mysql\mysql_installservice.bat </p>
       <p>MySQL service uninstall: \xampp\mysql\mysql_uninstallservice.bat </p>
       <p>FileZilla service (un)install: \xampp\filezilla_setup.bat </p>
       <p>Mercury: No service installation available</p>
       </dd>
-      <dt>Is XAMPP production ready?</dt>
+      <dt>XAMPPを実際の運用で使用することはできますか？</dt>
       <dd>
-      <p>XAMPP is not meant for production use but only for development environments. The way XAMPP is configured is to be open as possible to allow the developer anything he/she wants. For development environments this is great but in a production environment it could be fatal.</p>
-      <p>Here a list of missing security in XAMPP:</p>
+      <p>XAMPPは製品運用の手段ではなく、開発環境です。開発者の思った通りに何でもできるよう可能な限りオープンに設定されているのがXAMPPです。これは開発環境には素晴らしい事ですが、製品としては致命的です。</p>
+      <p>XAMPPのセキュリティ上の脆弱性を以下に示します。</p>
       <ol>
-        <li>The MySQL administrator (root) has no password.</li>
-        <li>The MySQL daemon is accessible via network.</li>
+        <li>MySQL の管理者 ID (root) にパスワードが設定されていません。                </li>
+        <li>MySQL デーモンは、ネットワークを介してアクセス可能です。</li>
         <li>ProFTPD uses the password "lampp" for user "daemon".</li>
-        <li>PhpMyAdmin is accessible via network.</li>
-        <li>The XAMPP demopage is accessible via network.</li>
         <li>The default users of Mercury and FileZilla are known.</li>
       </ol>
       <p>All points can be a huge security risk. Especially if XAMPP is accessible via network and people outside your LAN. It can also help to use a firewall or a (NAT) router. In case of a router or firewall, your PC is normally not accessible via network. It is up to you to fix these problems. As a small help there is the "XAMPP Security console".</p>
-      <p>Please secure XAMPP before publishing anything online. A firewall or an external router are only sufficient for low levels of security. For slightly more security, you can run the "XAMPP Security console" and assign passwords.</p>
-      <p>If you want have your XAMPP accessible from the internet, you should go to the following URI which can fix some problems:</p>
+      <p>オンラインで何かを公開する前にXAMPPをセキュリティで保護してください。ファイアウォールまたは外部ルータは、セキュリティのレベルが低いためです。もう少しセキュリティを強化するために、 「 XAMPPセキュリティ・コンソール"を実行し、パスワードを割り当てることができます。</p>
+      <p>                  自分のXAMPPをインターネットからアクセスできるようにさせたいなら、問題を修正できるこのURIへ行って下さい。                </p>
       <p><code> http://localhost/security/</code></p>
-      <p>With the security console you can set a password for the MySQL user "root" and phpMyAdmin. You can also enable a authentication for the XAMPP demopages.</p>
-      <p>This web based tool does not fix any additional security issues! Especially the FileZilla FTP server and the Mercury mail server you must secure yourself.</p></dd>
-      <dt>How do I uninstall XAMPP?</dt>
+      <p>セキュリティコンソールを使用すると、 MySQLユーザー"root" とphpMyAdminのパスワードを設定することができます。また、 XAMPPのデモページの認証を有効にすることができます。</p>
+      <p>このWebベースのツールは、追加のセキュリティ問題を修正しません！特に、 FileZillaのFTPサーバとMercuryメールサーバは、あなた自身でセキュリティ保護する必要があります。</p></dd>
+      <dt>XAMPPをアンインストールするにはどうしたらよいでしょうか？</dt>
       <dd>
-      <p>If you installed XAMPP using the installer version, please use the Uninstaller. The Uninstaller will delete all XAMPP entries from your registry and it will uninstall some installed services included with XAMPP. We highly recommend that you use the Uninstall program for removing XAMPP installations from the Installer version.Please backup all the data you want to keep before uninstalling XAMPP.</p>
+      <p>インストーラのバージョンを使用して、 XAMPPをインストールした場合は、アンインストーラを使用してください。アンインストーラは、レジストリからすべてのXAMPPエントリを削除し、それがXAMPPに含まれているいくつかインストールされているサービスをアンインストールします。我々はXAMPPのインストールを除去するためのアンインストールプログラムを使用することを強くお勧めします。XAMPPをアンインストールする前に、保存しておきたいすべてのデータのバックアップを行ってください。</p>
       <p>If you installed XAMPP using the ZIP and 7zip versions, shut down all XAMPP servers and exit all panels. If you installed any services, uninstall and shut them down too. Now simply delete the entire folder where XAMPP is installed. There are no registry entries and no environment variables to  clean up.</p>
       </dd>
       <dt>What is the "lite" version of XAMPP?</dt>
@@ -214,7 +216,7 @@
       <dd>
       <p>Yes. After moving of the XAMPP directory, you must execute "setup_xampp.bat". The paths in the configuration files will be adjusted with this step.</p>
       <p>If you have installed any server as Windows service, you must first remove the Windows service, and after the moving you can install the service again.</p>
-      <p>Warning: The configuration files from your own scripts, like PHP applications, are not adjusted. But it's possible to write a "plug-in" for the installer. With such a plug-in, the installer can adjust such files too.</p>
+      <p>WARNING: The configuration files from your own scripts, like PHP applications, are not adjusted. But it's possible to write a "plug-in" for the installer. With such a plug-in, the installer can adjust such files too.</p>
       </dd>
       <dt>What are "Automatic start pages" for the WWW directories?</dt>
       <dd>
@@ -341,8 +343,7 @@ EnableMMAP off</code></p>
 
       <dt>How can I set a root password in MySQL?</dt>
       <dd>
-      <p>The easiest way is to use the security console, which you can access at http://localhost/security/ This console creates a password for the MySQL user root and adjusts the phpMyAdmin configuration.</p>
-      <p>Another approach is to configure it with the "XAMPP Shell" (command prompt). Open the shell and execute this command:<code>mysqladmin.exe -u root password secret</code></p>
+      <p>Configure it with the "XAMPP Shell" (command prompt). Open the shell from the XAMPP control pane and execute this command:<code>mysqladmin.exe -u root password secret</code>This sets the root password to 'secret'.</p>
       </dd>
 
       <dt>Can I use my own MySQL server?</dt>
@@ -352,11 +353,36 @@ EnableMMAP off</code></p>
 
       <dt>How do I restrict access to phpMyAdmin from the outside?</dt>
       <dd>
-      <p>In the basic configuration of XAMPP, phpMyAdmin have public access.</p>
-      <p>You can change the MySQL root password and choose the authentication method for phpMyAdmin from the security console at http://localhost/security/</p>
+      <p>In the basic configuration of XAMPP, phpMyAdmin is accessible only from the same host that XAMPP is running on, at http://127.0.0.1 or http://localhost.</p>
       <p>Before you can access the MySQL server, phpMyAdmin will prompt you for a user name and password. Don't forget to set a password for the user "root" first.</p>
       </dd>
 
+      <dt>How do I enable access to phpMyAdmin from the outside?</dt>
+      <dd>
+      <p>In the basic configuration of XAMPP, phpMyAdmin is accessible only from the same host that XAMPP is running on, at http://127.0.0.1 or http://localhost.</p>
+      <p>IMPORTANT: Enabling external access for phpMyAdmin in production environments is a significant security risk. You are strongly advised to only allow access from localhost. A remote attacker could take advantage of any existing vulnerability for executing code or for modifying your data.</p>
+      <p>To enable remote access to phpMyAdmin, follow these steps:</p>
+      <ul>
+        <li>Edit the apache\conf\extra\httpd-xampp.conf file in your XAMPP installation directory.</li>
+        <li>Within this file, find the lines below. 
+          <p><code>
+              Alias /phpmyadmin "C:/xampp/phpMyAdmin/"
+              &lt;Directory "C:/xampp/phpMyAdmin"&gt;
+                AllowOverride AuthConfig
+                Require local
+          </code></p>
+        </li>
+        <li>Then replace 'Require local' with 'Require all granted'.</li>
+          <p><code>
+              Alias /phpmyadmin "C:/xampp/phpMyAdmin/"
+              &lt;Directory "C:/xampp/phpMyAdmin"&gt;
+                AllowOverride AuthConfig
+                Require all granted
+          </code></p>
+        <li>Restart the Apache server using the XAMPP control panel.</li>
+      </ul>
+      </dd>
+      
       <dt>Where is the IMAP support for PHP?</dt>
       <dd>
       <p>As default, the IMAP support for PHP is deactivated in XAMPP due to some mysterious initialization errors with some home versions like Windows 98. If you work with NT systems, you can open the file "\xampp\php\php.ini" to activate the php exstension by removing the beginning semicolon at the line ";extension=php_imap.dll". It should be:</br>
@@ -390,11 +416,32 @@ EnableMMAP off</code></p>
       <p>For this, we have opened a topic in the forum with examples and possible solutions: <a href="https://community.apachefriends.org/f/viewtopic.php?t=3012">MCrypt topic</a></p>
       </dd>
 
-      <dt>Do Microsoft Activer Server Pages (ASP) work with XAMPP?</dt>
+      <dt>Do Microsoft Active Server Pages (ASP) work with XAMPP?</dt>
       <dd>
       <p>No. And Apache::ASP with the Perl Add-On is not the same. Apache::ASP only knows Perl-Script, but ASP from the Internet Information Server (IIS) also knows the normal VBScript. But for ASP .NET, there is a 3rd party Apache module available.</p>
       </dd>
 
+      <dt>How can I get XAMPP working on port 80 under Windows 10?</dt>
+      <dd>
+      <p>By default, Windows 10 starts Microsoft IIS on port 80, which is the same default port used by Apache in XAMPP. As a result, Apache cannot bind to port 80.</p>
+      <p>To disable IIS from running on port 80, follow these steps:</p>
+      <ul>
+        <li>Open the Services panel in Computer Management.</li>
+        <li>Search for the 'World Wide Web Publishing Service' and select it.</li>
+        <li>Click the link to 'Stop the service'.</li>
+        <li>Double-click the service name.</li>
+        <li>In the 'Startup type' field, change the startup type to 'Disabled'.</li>
+        <li>Click 'OK' to save your changes.</li>
+      </ul>
+      <p>You should now be able to start Apache in XAMPP on port 80.</p>
+      <p>For more information, refer to the 'Troubleshoot Apache Startup Problems' guide included with XAMPP or <a href='https://community.apachefriends.org/f/viewtopic.php?f=16&t=71620'>this forum post</a>.</p>
+      </dd>
+      
+      <dt>How can I use Microsoft Edge to access local addresses under Windows 10?</dt>
+      <dd>
+      <p>If your local machine has the host name 'myhost', you will not be able to access URLs such as http://myhost in Microsoft Edge. To resolve this, you should instead use the addresses http://127.0.0.1 or http://localhost.</p>
+      </dd>
+      
       </dd>
       </dd>
     </dl>
@@ -424,7 +471,7 @@ EnableMMAP off</code></p>
               </ul>
             </div>
             <div class="large-4 columns">
-              <p class="text-right">Copyright (c) 2015, Apache Friends</p>
+              <p class="text-right">Copyright (c) 2017, Apache Friends</p>
             </div>
           </div>
         </div>

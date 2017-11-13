@@ -4,11 +4,6 @@ use PDO;
 
 class database
 {
-	private $host   = DB_HOST;
-	private $user   = DB_USER;
-	private $pass   = DB_PASS;
-	private $dbname = DB_NAME;
-
 	private $dbh;
 	private $error;
 
@@ -16,24 +11,50 @@ class database
 
 	public function __construct()
 	{
-		// Set DSN
-		$dsn = 'mysql:host=' . $this->host . ';dbname=' . $this->dbname;
+	}
+	
+	public function conncect(){
 		
+		// Set DSN
+		$dsn = 'mysql:host='.config::getConf('dbHost').';dbname='.config::getConf('dbName');
 		// Set options
 		$options = array(
 				PDO::ATTR_PERSISTENT    => true,
 				// PDO::ATTR_PERSISTENT    => false,
 				PDO::ATTR_ERRMODE       => PDO::ERRMODE_EXCEPTION
-				
+		
 		);
 		//Create a new PDO instance
 		try {
-			$this->dbh = new PDO($dsn, $this->user, $this->pass, $options);
+			$this->dbh = new PDO($dsn, config::getConf('dbUser'), config::getConf('dbPass'), $options);
 		}
 		// Catch any errors
 		catch(PDOException $e) {
 			echo $e->getMessage();
 		}
+		
+	}
+	
+	public function conncectWithData($dbHost,$dbName,$dbUser,$dbPass){
+
+		// Set DSN
+		$dsn = 'mysql:host='.$dbHost.';dbname='.$dbName;
+		// Set options
+		$options = array(
+				PDO::ATTR_PERSISTENT    => true,
+				// PDO::ATTR_PERSISTENT    => false,
+				PDO::ATTR_ERRMODE       => PDO::ERRMODE_EXCEPTION
+	
+		);
+		//Create a new PDO instance
+		try {
+			$this->dbh = new PDO($dsn, $dbUser, $dbPass, $options);
+		}
+		// Catch any errors
+		catch(PDOException $e) {
+			echo $e->getMessage();
+		}
+	
 	}
 	
 	public function getPdo(){

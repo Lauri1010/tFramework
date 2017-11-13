@@ -1,44 +1,17 @@
 <?php
 namespace tFramework;
-
+$webapp=true;
 $url=$_SERVER['REQUEST_URI'];
-define('DS', DIRECTORY_SEPARATOR);
-define('ROOT', dirname(dirname(__FILE__)));
-define('FRFOLDER','framework');
-
-require ROOT.DS.FRFOLDER.DS.'lib'.DS.'bootstrap.php';
-
-/**
- * This only occurs when the full application is called
- * 
- * */
-
-if(isset($_GET['p'])){
-
-	$pRequest=$_GET['p'];	
-	
-	require ROOT.DS.FRFOLDER.DS.'vendor'.DS.'autoload.php';
-	// use chep
-	// request the correct controller
-	require_once ROOT.DS.FRFOLDER.DS.'requestDispatchers'.DS.'baseDispatcher.php';
-
-	
-	
-
+$host=$_SERVER['SERVER_NAME'];
+if($host=='localhost'){
+	define ('DEVELOPMENT_ENVIRONMENT',true);
+	define('PROTOCOL','http://');
 }else{
-
-	$title = "Diimo";
-	
-	$metad = "Diimo";
-	
-	require ROOT.DS.FRFOLDER.DS.'layerPages'.DS.'views'.DS.'snipplets'.DS.'headPureBlog.php';
-
-	echo "<body> 
-	<div id=\"mContainer\">
-	</div>";
-	
-	require ROOT.DS.FRFOLDER.DS.'layerPages'.DS.'views'.DS.'snipplets'.DS.'footer.php';
-	require ROOT.DS.FRFOLDER.DS.'layerPages'.DS.'views'.DS.'snipplets'.DS.'bottom.php';
-	
-	
+	define ('DEVELOPMENT_ENVIRONMENT',false);
+	define('PROTOCOL','https://');
 }
+define('SHOST',$_SERVER['HTTP_HOST']);
+define('SERVERNAME',$_SERVER['SERVER_NAME']);
+require 'bootstrap.php';
+require FRPATH.'vendor'.DS.'autoload.php';
+require FRPATH.'requestDispatchers'.DS.'baseDispatcher.php';

@@ -44,7 +44,7 @@ namespace tFramework;
 					<section class="post">
 						<header class="post-header">
 							<img class="post-avatar" alt="Eric Ferraiuolo&#x27;s avatar"
-								height="48" width="48" src="img/common/ericf-avatar.png">
+								height="48" width="48" src="http://site/products/img/common/ericf-avatar.png">
 
 							<h2 class="post-title">Everything You Need to Know About Grunt</h2>
 

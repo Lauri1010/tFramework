@@ -1,1 +1,0 @@
-<?php $sql="SELECT product_id FROM product" ?>

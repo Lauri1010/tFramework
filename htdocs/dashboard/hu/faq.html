@@ -82,18 +82,22 @@
       <p>Megjegyzés: A fájlok kibontásakor előfordulhatnak hamis pozitív vírusriasztások.</p>
       <p><strong>A telepítő használata:</strong></p>
       <p></p>
-      <p>A XAMPP vezérlőpult az Apache, MySQL, FileZilla és Mercury indításához és leállításhoz, vagy ezen kiszolgálók szolgáltatásként való telepítéséhez.</p>
+      <p>Használja a Xampp vezérlőpultot az Apache, MySQL, FileZillaés a Mercury szolgáltatások elindításához és leállításához vagy a server szolgáltatások telepítéséhez.</p>
       <p><strong>Telepítés ZIP-ből</strong></p>
-      <p>Bontsa ki a zip archívumokat a választott mappába. A XAMPP a „C:\xampp” alkönyvtárba kerül kibontásra a választott célkönyvtár alá. Most indítsa el a „setup_xampp.bat” fájlt, hogy elvégezze a XAMPP beállítását a rendszeréhez.</p>
-      <p>Ha a „C:\” gyökérkönyvtárat válassza célnak, akkor nem szabad a „setup_xampp.bat” fájlt futtatnia.</p>
+      <p>Bontsa ki a zip archívumokat a választott mappába. A XAMPP a „C:\\xampp” alkönyvtárba kerül kibontásra a választott célkönyvtár alá. Most indítsa el a „setup_xampp.bat” fájlt, hogy elvégezze a XAMPP beállítását a rendszeréhez.</p>
+      <p>Ha a „C:\\” gyökérkönyvtárat válassza célnak, akkor nem szabad a „setup_xampp.bat” fájlt futtatnia.</p>
       <p>Mint a telepítő verzióban, most már használhatja a „XAMPP vezérlőpultot” a további feladatokhoz.</p>
+      </dd>
+      <dt>Does XAMPP include MySQL or MariaDB?</dt>
+      <dd>
+      <p>Since XAMPP 5.5.30 and 5.6.14, XAMPP ships MariaDB instead of MySQL. The commands and tools are the same for both.</p>
       </dd>
       <dt>Hogyan indíthatom a XAMPP programot beállítás nélkül?</dt>
       <dd>
-      <p>Ha a XAMPP programot egy felsőszintű mappába bontotta ki, mint például „C:\” vagy „D:\”, akkor a legtöbb szolgáltatást - úgymint Apache vagy MySQL - közvetlenül is el tudja indítani a „setup_xampp.bat” fájl futtatása nélkül.</p>
+      <p>Ha a XAMPP programot egy felsőszintű mappába bontotta ki, mint például „C:\\” vagy „D:\\”, akkor a legtöbb szolgáltatást - úgymint Apache vagy MySQL - közvetlenül is el tudja indítani a „setup_xampp.bat” fájl futtatása nélkül.</p>
       <p>Nem javasolt a beállító parancsfájl használata, vagy relatív elérési utak kiválasztása a beállító parancsfájlban, ha a XAMPP programot USB-meghajtóra telepítette. Ennek oka, hogy minden PC más meghajtóbetűt rendelhet a meghajtónak. Bármikor átválthat abszolút útvonalakról relatívakra a beállító parancsfájllal.</p>
       <p>A Letöltések oldalról elérhető telepítő használata a legegyszerűbb módja a XAMPP telepítésének. A telepítés befejezése után a Start | Programok | XAMPP helyen fogja megtalálni a XAMPP programot. A XAMPP vezérlőpultot használhatja az összes kiszolgáló indításához és leállításához, valamint szolgáltatások telepítéséhez és eltávolításához.</p>
-      <p>A XAMPP vezérlőpult az Apache, MySQL, FileZilla és Mercury indításához és leállításhoz, vagy ezen kiszolgálók szolgáltatásként való telepítéséhez.</p>
+      <p>Használja a Xampp vezérlőpultot az Apache, MySQL, FileZillaés a Mercury szolgáltatások elindításához és leállításához vagy a server szolgáltatások telepítéséhez.</p>
       </dd>
       <dt>Hogyan indíthatom el és állíthatom le a XAMPP-ot?</dt>
       <dd>
@@ -128,17 +132,17 @@
       <dd>
       <p>Gépelje be a következő URL-t a kedvenc webböngészőjébe:</p>
       <p><code>http://localhost/</code> vagy  <code>http://127.0.0.1/</code> </p>
-      <p>Ekkor látnia kell a XAMPP kezdőlapját, amely tartalmaz néhány hivatkozást a telepített szoftver állapotának ellenőrzéséhez és néhány kisebb programozási példát.</p>
+      <p>You should see the XAMPP start page, as shown below.</p>
         <img src="/dashboard/images/screenshots/xampp-windows-start.jpg" />
       </dd>
       <dt>Hogyan tudok egy kiszolgálót szolgáltatásként telepíteni?</dt>
       <dd>
       <p>A XAMPP minden kiszolgálója Windows szolgáltatásként is telepíthető. Ezt is a XAMPP vezérlőpultból tudja telepíteni. Ebben az esetben a parancsfájlok vagy a vezérlőpult futtatása rendszergazdai jogosultságokkal szükséges.</p>
-      <p>Apache szolgáltatás telepítés: \xampp\apache\apache_installservice.bat</p>
-      <p>Apache szolgáltatás eltávolítás: \xampp\apache\apache_uninstallservice.bat </p>
-      <p>MySQL szolgáltatás telepítés: \xampp\mysql\mysql_installservice.bat </p>
-      <p>MySQL szolgáltatás eltávolítás: \xampp\mysql\mysql_uninstallservice.bat </p>
-      <p>FileZilla szolgáltatás telepítés és eltávolítás: \xampp\filezilla_setup.bat </p>
+      <p>Apache szolgáltatás telepítés: \\xampp\\apache\\apache_installservice.bat</p>
+      <p>Apache szolgáltatás eltávolítás: \\xampp\\apache\\apache_uninstallservice.bat </p>
+      <p>MySQL szolgáltatás telepítés: \\xampp\\mysql\\mysql_installservice.bat </p>
+      <p>MySQL szolgáltatás eltávolítás: \\xampp\\mysql\\mysql_uninstallservice.bat </p>
+      <p>FileZilla szolgáltatás telepítés és eltávolítás: \\xampp\\filezilla_setup.bat </p>
       <p>Mercury: nem érhető el szolgáltatás telepítés</p>
       </dd>
       <dt>A XAMPP készen áll a munkához?</dt>
@@ -149,8 +153,6 @@
         <li>A MySQL adminisztrátornak (root) nincs jelszava.</li>
         <li>A MySQL démon elérhető a hálózaton keresztül.</li>
         <li>A ProFTPD a „lampp” jelszót használja a „daemon” felhasználóhoz.</li>
-        <li>A PhpMyAdmin elérhető a hálózaton keresztül.</li>
-        <li>A XAMPP bemutatóoldal elérhető a hálózaton keresztül.</li>
         <li>A Mercury és FileZilla alapértelmezett felhasználói ismertek.</li>
       </ol>
       <p>Minden pont hatalmas biztonsági kockázat lehet. Különösen akkor, ha a XAMPP elérhető a hálózaton keresztül és a LAN-on kívüli emberek számára. Segíthet azonban egy tűzfal vagy egy router (NAT) használata. Egy router vagy egy tűzfal esetén a PC normális esetben nem érhető el a hálózaton keresztül. Öntől függ, hogy kijavítja-e ezeket a hibákat. Egy kis segítségként létezik egy „XAMPP biztonsági konzol”.</p>
@@ -170,12 +172,12 @@
       </dd>
       <dt>Hová tegyem a webes tartalmakat?</dt>
       <dd>
-      <p>Minden WWW dokumentum fő könyvtára a \xampp\htdocs. Ha ebbe a könyvtárba teszi a „teszt.html” fájlt, akkor a „http://localhost/teszt.html” URI segítségével férhet hozzá.</p>
+      <p>Minden WWW dokumentum fő könyvtára a \\xampp\\htdocs. Ha ebbe a könyvtárba teszi a „teszt.html” fájlt, akkor a „http://localhost/teszt.html” URI segítségével férhet hozzá.</p>
       <p>És a „teszt.php”? Csak használja a „http://localhost/teszt.php” hivatkozást. Egy egyszerű teszt-parancsfájl lehet:</p>
       <p><code>&lt;?php<br />
         echo 'Hello world'; <br />
         ?&gt;</code></p>
-      <p>Egy új alkönyvtár a webhez? Csak hozzon létre egy új könyvtárat (például „valami”) a „\xampp\htdocs” könyvtáron belül (a legjobb szóközök nélkül és csak ASCII karakterekkel), hozzon létre egy tesztfájlt ebben a könyvtárban és elérheti a „http://localhost/valami/teszt.php” címen.</p>
+      <p>Egy új alkönyvtár a webhez? Csak hozzon létre egy új könyvtárat (például „valami”) a „\\xampp\\htdocs” könyvtáron belül (a legjobb szóközök nélkül és csak ASCII karakterekkel), hozzon létre egy tesztfájlt ebben a könyvtárban és elérheti a „http://localhost/valami/teszt.php” címen.</p>
       <p><strong>További specifikációk</strong></p>
       <p>HTML:<br>
       Programfájl: \xampp\htdocs<br>
@@ -251,9 +253,9 @@
       <dt>Miért nem működik a XAMPP Vistán?</dt>
       <dd>
       <p><strong>Felhasználói fiókok felügyelete (UAC)</strong></p>
-      <p>A „C:\Program files” könyvtárra nincs teljes írási jogosultsága, kivéve rendszergazdaként. Vagy csak korlátozott jogosultságai vannak (például a „.\xampp\htdocs” mappára). Ebben az esetben nem tudja szerkeszteni a fájlt.</br>
+      <p>A „C:\\Program files” könyvtárra nincs teljes írási jogosultsága, kivéve rendszergazdaként. Vagy csak korlátozott jogosultságai vannak (például a „.\\xampp\\htdocs” mappára). Ebben az esetben nem tudja szerkeszteni a fájlt.</br>
 <strong>Megoldás:</strong> Emelje meg a jogosultságait az exploreren belül (jobb kattintás / biztonság), vagy tiltsa le a felhasználói fiókok felügyeletét (UAC).</p>
-      <p>Az Apache/MySQL kiszolgálókat a „C:\xampp” helyre telepítette Windows szolgáltatásként. De nem tudja elindítani vagy leállítani a szolgáltatásokat a „XAMPP vezérlőpulttal”, vagy nem tudja eltávolítani azokat.</br></br>
+      <p>Az Apache/MySQL kiszolgálókat a „C:\\xampp” helyre telepítette Windows szolgáltatásként. De nem tudja elindítani vagy leállítani a szolgáltatásokat a „XAMPP vezérlőpulttal”, vagy nem tudja eltávolítani azokat.</br></br>
 <strong>Megoldás:</strong> Használja a Windows szolgáltatáskezelő konzolját vagy tiltsa le az UAC-ot.</p>
       <p><strong>A felhasználói fiókok felügyeletének (UAC) letiltása</strong></p>
       <p>Az UAC letiltásához használja az „msconfig” programot. Az „msconfig” programban menjen az „Eszközökre”, válassza a „felhasználói fiókok felügyeletének letiltása” lehetőséget, és erősítse meg a választását. Ezután újra kell indítania a Windowst. Ezzel egy időben ismét engedélyezheti az UAC-ot.</p>
@@ -328,12 +330,12 @@ apr_socket_opt_set: (SO_KEEPALIVE)</code></li>
       <p>Két forgatókönyv játszhat itt szerepet. Vagy a CPU van maximálisan kihasználva, vagy a böngésző képes ugyan csatlakozni a kiszolgálóhoz, de nem lát semmit (a rendszer sikertelenül próbálja betölteni az oldalt). Mindkét esetben a következő üzenetet láthatja az Apache naplófájljában:</p>
       <p><code>Child: Encountered too many AcceptEx faults accepting client connections.
 winnt_mpm: falling back to 'AcceptFilter none'.</code></p>
-      <p>Az MPM visszaáll egy biztonságosabb megvalósításra, de néhány klienskérés nem lett helyesen feldolgozva. Ezen hiba elkerülésének érdekében használja az „AcceptFilter” beállítást a „none” elfogadásszűrővel a „\xampp\apache\conf\extra\httpd-mpm.conf” fájlban.</p>
+      <p>Az MPM visszaáll egy biztonságosabb megvalósításra, de néhány klienskérés nem lett helyesen feldolgozva. Ezen hiba elkerülésének érdekében használja az „AcceptFilter” beállítást a „none” elfogadásszűrővel a „\\xampp\\apache\\conf\\extra\\httpd-mpm.conf” fájlban.</p>
       </dd>
 
       <dt>Miért nem jelennek meg a képek és a stíluslapok?</dt>
       <dd>
-      <p>Néha problémák vannak a képek és a stíluslapok megjelenítésével. Különösen akkor, ha ezek a fájlok egy hálózati eszközön találhatók. Ebben az esetben engedélyezhet (vagy hozzáadhat) egyet, ha a következő sorok a „\xampp\apache\conf\httpd.conf” fájlban vannak:</p>
+      <p>Néha problémák vannak a képek és a stíluslapok megjelenítésével. Különösen akkor, ha ezek a fájlok egy hálózati eszközön találhatók. Ebben az esetben engedélyezhet (vagy hozzáadhat) egyet, ha a következő sorok a „\\xampp\\apache\\conf\\httpd.conf” fájlban vannak:</p>
       <p><code>EnableSendfile off</br>
 EnableMMAP off</code></p>
       <p>Ezt a hibát okozhatják sávszélesség-szabályzó programok is, mint például a NetLimiter.</p>
@@ -341,25 +343,49 @@ EnableMMAP off</code></p>
 
       <dt>Hogyan állíthatok be rendszergazda jelszót a MySQL-ben?</dt>
       <dd>
-      <p>A legegyszerűbb módja ennek a biztonsági konzol használata, amelyhez a http://localhost/security/ címen férhet hozzá. Ez a konzol létrehoz egy jelszót a MySQL root felhasználójának, és módosítja a phpMyAdmin beállítását.</p>
-      <p>Egy másik megközelítés a „XAMPP parancsértelmezővel” való beállítás (parancssor). Nyisson egy parancsértelmezőt és futtassa le ezt a parancsot:<code>mysqladmin.exe -u root password secret</code></p>
+      <p>Configure it with the "XAMPP Shell" (command prompt). Open the shell from the XAMPP control pane and execute this command:<code>mysqladmin.exe -u root password secret</code>This sets the root password to 'secret'.</p>
       </dd>
 
       <dt>Használhatom a saját MySQL kiszolgálómat?</dt>
       <dd>
-      <p>Igen. Egyszerűen ne indítsa el a MySQL kiszolgálót a XAMPP csomagból. Vegye figyelembe, hogy nem lehet két kiszolgálót elindítani ugyanazon a porton. Ha a „root” felhasználónak állított be jelszót, ne felejtse el szerkeszteni a „\xampp\phpMyAdmin\config.inc.php” fájlt.</p>
+      <p>Igen. Egyszerűen ne indítsa el a MySQL kiszolgálót a XAMPP csomagból. Vegye figyelembe, hogy nem lehet két kiszolgálót elindítani ugyanazon a porton. Ha a „root” felhasználónak állított be jelszót, ne felejtse el szerkeszteni a „\\xampp\\phpMyAdmin\\config.inc.php” fájlt.</p>
       </dd>
 
       <dt>Hogyan tudom korlátozni a phpMyAdmin kívülről való hozzáférését?</dt>
       <dd>
-      <p>A XAMPP alapbeállításában a phpMyAdmin nyilvános hozzáféréssel rendelkezik.</p>
-      <p>Megváltoztathatja a MySQL rendszergazda jelszavát, és választhat hitelesítési módszert a phpMyAdmin felületéhez a http://localhost/security/ címen lévő biztonsági konzolon.</p>
+      <p>In the basic configuration of XAMPP, phpMyAdmin is accessible only from the same host that XAMPP is running on, at http://127.0.0.1 or http://localhost.</p>
       <p>Mielőtt hozzáférne a MySQL kiszolgálóhoz, a phpMyAdmin kérni fog Öntől egy felhasználónevet és egy jelszót. Ne felejtsen el először beállítani jelszót a „root” felhasználónak.</p>
       </dd>
 
+      <dt>How do I enable access to phpMyAdmin from the outside?</dt>
+      <dd>
+      <p>In the basic configuration of XAMPP, phpMyAdmin is accessible only from the same host that XAMPP is running on, at http://127.0.0.1 or http://localhost.</p>
+      <p>IMPORTANT: Enabling external access for phpMyAdmin in production environments is a significant security risk. You are strongly advised to only allow access from localhost. A remote attacker could take advantage of any existing vulnerability for executing code or for modifying your data.</p>
+      <p>To enable remote access to phpMyAdmin, follow these steps:</p>
+      <ul>
+        <li>Edit the apache\conf\extra\httpd-xampp.conf file in your XAMPP installation directory.</li>
+        <li>Within this file, find the lines below. 
+          <p><code>
+              Alias /phpmyadmin "C:/xampp/phpMyAdmin/"
+              &lt;Directory "C:/xampp/phpMyAdmin"&gt;
+                AllowOverride AuthConfig
+                Require local
+          </code></p>
+        </li>
+        <li>Then replace 'Require local' with 'Require all granted'.</li>
+          <p><code>
+              Alias /phpmyadmin "C:/xampp/phpMyAdmin/"
+              &lt;Directory "C:/xampp/phpMyAdmin"&gt;
+                AllowOverride AuthConfig
+                Require all granted
+          </code></p>
+        <li>Restart the Apache server using the XAMPP control panel.</li>
+      </ul>
+      </dd>
+      
       <dt>Hol van az IMAP támogatás a PHP-hoz?</dt>
       <dd>
-      <p>Alapértelmezetten az IMAP támogatás nincs aktiválva a PHP-hoz az XAMPP programban néhány megmagyarázhatatlan előkészítési hiba miatt egy-két otthoni verzióban, mint például a Windows 98-ban. Ha NT rendszerekkel dolgozik, megnyithatja a „\xampp\php\php.ini” fájlt a PHP-kiterjesztés aktiválásához a kezdő pontosvessző eltávolításával a „;extension=php_imap.dll” sor elejéről. Ilyennek kell lennie:</br>
+      <p>Alapértelmezetten az IMAP támogatás nincs aktiválva a PHP-hoz az XAMPP programban néhány megmagyarázhatatlan előkészítési hiba miatt egy-két otthoni verzióban, mint például a Windows 98-ban. Ha NT rendszerekkel dolgozik, megnyithatja a „\\xampp\\php\\php.ini” fájlt a PHP-kiterjesztés aktiválásához a kezdő pontosvessző eltávolításával a „;extension=php_imap.dll” sor elejéről. Ilyennek kell lennie:</br>
 <code>extension=php_imap.dll</code></p>
       <p>Most indítsa újra az Apache kiszolgálót és az IMAP működni fog. Ugyanezeket a lépéseket használhatja minden olyan kiterjesztésnél, amely nincs engedélyezve az alapértelmezett beállításban.</p>
       </dd>
@@ -376,13 +402,13 @@ EnableMMAP off</code></p>
 
       <dt>Hogyan aktiválhatom az eAccelerator kiterjesztést?</dt>
       <dd>
-      <p>Mint a többi (Zend) kiterjesztést, a „php.ini” fájlban aktiválhatja. Ebben a fájlban engedélyezze a „;zend_extension = "\xampp\php\ext\php_eaccelerator.dll"” sort. Ilyennek kell lennie:</br>
+      <p>Mint a többi (Zend) kiterjesztést, a „php.ini” fájlban aktiválhatja. Ebben a fájlban engedélyezze a „;zend_extension = "\\xampp\\php\\ext\\php_eaccelerator.dll"” sort. Ilyennek kell lennie:</br>
 <code>zend_extension = "\xampp\php\ext\php_eaccelerator.dll"</code></p>
       </dd>
 
       <dt>Hogyan tudom javítani a csatlakozási hibát az MS SQL kiszolgálómhoz?</dt>
       <dd>
-      <p>Ha az mssql kiterjesztés be lett töltve a php.ini fájlban, néha probléma jelentkezik, amikor kizárólag TCP/IP van használva. Kijavíthatja ezt a hibát a Microsoft által közzétett újabb „ntwdblib.dll” fájllal. Cserélje le a régebbi fájlt a „\xampp\apache\bin” és a „\xampp\php” könyvtárban az újra. A licenc miatt nem csomagolhatjuk a XAMPP-hoz ennek a fájlnak az újabb verzióját.</p>
+      <p>Ha az mssql kiterjesztés be lett töltve a php.ini fájlban, néha probléma jelentkezik, amikor kizárólag TCP/IP van használva. Kijavíthatja ezt a hibát a Microsoft által közzétett újabb „ntwdblib.dll” fájllal. Cserélje le a régebbi fájlt a „\\xampp\\apache\\bin” és a „\\xampp\\php” könyvtárban az újra. A licenc miatt nem csomagolhatjuk a XAMPP-hoz ennek a fájlnak az újabb verzióját.</p>
       </dd>
 
       <dt>Hogyan dolgozhatok a PHP mcrypt kiterjesztéssel?</dt>
@@ -390,11 +416,32 @@ EnableMMAP off</code></p>
       <p>Ehhez nyitottunk egy témát a fórumban példákkal és lehetséges megoldásokkal: <a href="https://community.apachefriends.org/f/viewtopic.php?t=3012">MCrypt téma</a></p>
       </dd>
 
-      <dt>Működik a Microsoft Activer Server Pages (ASP) XAMPP-on?</dt>
+      <dt>Működik a Microsoft Active Server Pages (ASP) XAMPP-on?</dt>
       <dd>
       <p>Nem. És az Apache::ASP a Perl kiegészítővel nem ugyanaz. Az Apache::ASP csak ismeri a Perl-parancsfájlokat, de az Internet Information Server (IIS) által tartalmazott ASP szintén ismeri a normál VBScriptet. Azonban az ASP .NET-hez elérhető harmadik fél által készített Apache-modul.</p>
       </dd>
 
+      <dt>How can I get XAMPP working on port 80 under Windows 10?</dt>
+      <dd>
+      <p>By default, Windows 10 starts Microsoft IIS on port 80, which is the same default port used by Apache in XAMPP. As a result, Apache cannot bind to port 80.</p>
+      <p>To disable IIS from running on port 80, follow these steps:</p>
+      <ul>
+        <li>Open the Services panel in Computer Management.</li>
+        <li>Search for the 'World Wide Web Publishing Service' and select it.</li>
+        <li>Click the link to 'Stop the service'.</li>
+        <li>Double-click the service name.</li>
+        <li>In the 'Startup type' field, change the startup type to 'Disabled'.</li>
+        <li>Click 'OK' to save your changes.</li>
+      </ul>
+      <p>You should now be able to start Apache in XAMPP on port 80.</p>
+      <p>For more information, refer to the 'Troubleshoot Apache Startup Problems' guide included with XAMPP or <a href='https://community.apachefriends.org/f/viewtopic.php?f=16&t=71620'>this forum post</a>.</p>
+      </dd>
+      
+      <dt>How can I use Microsoft Edge to access local addresses under Windows 10?</dt>
+      <dd>
+      <p>If your local machine has the host name 'myhost', you will not be able to access URLs such as http://myhost in Microsoft Edge. To resolve this, you should instead use the addresses http://127.0.0.1 or http://localhost.</p>
+      </dd>
+      
       </dd>
       </dd>
     </dl>
@@ -424,7 +471,7 @@ EnableMMAP off</code></p>
               </ul>
             </div>
             <div class="large-4 columns">
-              <p class="text-right">Copyright © Apache Friends, 2015.</p>
+              <p class="text-right">Copyright © Apache Friends, 2017.</p>
             </div>
           </div>
         </div>
